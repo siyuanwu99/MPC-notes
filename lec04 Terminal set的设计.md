@@ -90,6 +90,28 @@ h_{u} \\
 h_{x}
 \end{array}\right]$$
 
+上式的$[K ; I]$就是之前算法中的$K_{aug}$。同理，对于下一步的状态$x^+$同样需要符合约束：
+$$\left[\begin{array}{ll}
+H_{u} & 0 \\
+0 & H_{x}
+\end{array}\right]K_{aug} x^+=\left[\begin{array}{cc}
+H_{u} & 0 \\
+0 & H_{x}
+\end{array}\right]K_{aug}  A_Kx \leqslant\left[\begin{array}{l}
+h_{u} \\
+h_{x}
+\end{array}\right]$$
+每前进一步就会多乘一个$A_K$,所以会有$A_K$的多次幂。
+
+**而这个算法构造不变集（invariant set）的方法核心其实就是每前进一步时，检查下一步的所有状态$\mathbf{x_{k+1}}$组成的集合是不是前一步所有状态$\mathbf{x_k}$组成集合的子集。如果不是，那么取所有这两步状态集合的交集（通过添加约束）作为当前状态集合，然后用这个集合往后接着推，检查再下一步的所有状态的集合。直到找到连续两步中，后一步的所有状态$\mathbf{x_{k+1}}$组成的集合完全包含于前一步所有状态组成的集合，则前一步所有状态$x_k$组成的集合为不变集。**
+
+更直观的理解请看下面的二维简化示意图：
+<div align=center>
+    <img width="325" height="250" src=figures/Lec0403.png/>
+    <img width="325" height="250" src=figures/Lec0404.png/>
+    <img width="325" height="250" src=figures/Lec0405.png/>
+</div>
+
 ## 2. 二次代价函数的水平子集作为终端集 Terminal set as quadratic level set
 ## 3. 通过增大终端代价函数权重保证终端集性质的满足
 
