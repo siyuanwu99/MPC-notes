@@ -2,7 +2,7 @@
 ## 简介
 根据之前的内容，为了保证MPC控制闭环系统的渐进稳定性（Asymptotic stability），在预测步数（Horizon）最后一步时(第N步)，我们需要让状态$x_N$在终端集$\mathcal{X_f}$中。
 $$x_N \in \mathcal{X_f}$$
-本章介绍了三种常用的终端集$\mathcal{X_f}$设计方法，主要针对线性时不变（LTI）系统，并在最后进行了简单的讨论。
+本章介绍了三种常用的终端集$\mathcal{X_f}$设计方法[1]，主要针对线性时不变（LTI）系统，并在最后进行了简单的讨论。
 ## MPC 终端集$\mathcal{X_f}$的性质
 根据之前第二章和第三章的内容，我们了解到了终端集$X_f$的性质。其中三条重要的性质是控制不变性（control invariant），约束容许性（constraint admissible）和李雅普诺夫递减性（lyapunov decrease）。
 * 控制不变性（control invariant）
@@ -25,7 +25,7 @@ $$x_N \in \mathcal{X_f}$$
 除此之外，$X_f$还需要为紧集（compact set）且包含平衡点（equilibrium point）。下面介绍三种保证满足以上顺序的终端集$\mathcal{X_f}$设计方法。
 ## 1. 基于无约束LQR的多面体（Polyhedron）终端集 Terminal set as invariant constraint admissible set
 第一种方法采用基于无约束LQR的方法控制第N步之后的闭环系统。换句话说，当预测步长最后一步的状态$x_N$进入终端集之后，MPC采用和无约束LQR相同的控制策略。具体方法其实就是把离散代数Riccati方程（DARE）的解作为终端代价函数的二次型矩阵。
-
+### 1.1 李雅普诺夫递减性
 下面简单证明李雅普诺夫递减性。
 
 考虑LTI系统状态空间方程：
@@ -36,7 +36,7 @@ $$l(x, u) = \frac{1}{2}(x^TQx + u^TRu)$$
 
 $$\mathbb{P}_{\infty}^{\text {uc }}(x): \min _{u} \sum_{k=0}^{\infty} \ell(x(k), u(k))$$
 
-根据离散代数Riccati方程（DARE）：
+根据离散代数Riccati方程（DARE）,具体推导过程请参考第二章：
 $$P=A_K^{T} P A_K+Q_K>0$$
 其中$A_K=A+BK \ $ （有些资料写的是$A-BK$,是因为这里取$K$的时候将前边的负号也算上了）, $\ Q_K=Q+K^TRK$:
 $$x_{k+1}=(A+BK)x_k=A_Kx_k$$
@@ -52,6 +52,50 @@ $$V_{f}(x_{k+1})=V_f(A_Kx_k)=\frac{1}{2}x_K^T(A_K^TPA_K)x_k=\frac{1}{2}x_K^T(P-Q
 所以满足李雅普诺夫递减性：
 $$V_{f}(x_{k+1})=\frac{1}{2}x_K^T(P-Q_K)x_k=V_{f}(x_k)-l(x_k)$$
 
+### 1.2 生成终端集的方法
+
+生成$X_f$具体算法如下[2]：
+<div align=center>
+    <img width="380" height="420" src=figures/Lec0402.png/>
+    </div>
+
+其中$f_i$表示第$i$个线性约束函数，即$H_ix$。$H$是包含了所有终端线性不等式约束函数的矩阵，它的行数等于约束的个数，列数等于状态变量的个数。终端集$X_f$为线性不等式约束$Hx \leq h$下的集合。可以看出，每个线性不等式约束相当于状态空间中的一个超平面。又由于$X_f$为紧集，最后形成$X_f$的形状是用多个超平面围出来的一个高维度多面体(Polyhedron)。多面体中的所有点（状态$x$）满足终端集性质。
+
+可以通过Matlab的dlqr函数，或Python的control library中的control.dare函数求解DARE得到$K$。
+
+**注意该算法中$A_K=A-BK$，和我们之前的介绍符号不同，这是因为它这里的K本身与我们取的K符号也相反。**
+
+### 1.3 生成终端集原理
+
+根据约束容许性质，状态约束$x \in \mathcal{X} $, 输入约束$u \in \mathcal{U} $应分别被满足。写为线性不等式约束：
+
+$$ \mathcal{X} \subseteq\left\{H_x x \leq h_{x}\right\} \\
+\mathcal{U} \subseteq\left\{H_{u} u \leq h_{u}\right\}$$
+
+当$u=Kx$，即输入为状态反馈时有：
+$$\left[\begin{array}{ll}
+H_{u} & 0 \\
+0 & H_{x}
+\end{array}\right]\left[\begin{array}{l}
+u \\
+x
+\end{array}\right]=\left[\begin{array}{cc}
+H_{u} & 0 \\
+0 & H_{x}
+\end{array}\right]\left[\begin{array}{l}
+K \\
+I
+\end{array}\right] x \leqslant\left[\begin{array}{l}
+h_{u} \\
+h_{x}
+\end{array}\right]$$
 
 ## 2. 二次代价函数的水平子集作为终端集 Terminal set as quadratic level set
 ## 3. 通过增大终端代价函数权重保证终端集性质的满足
+
+## 4.讨论
+## 5.参考
+[1] S. Grammatico, “Lecture 4. model predictive control” 2022
+
+[2] M. B. Alexander Berndt, “Balancing an inverted pendulum on a quadrotor: A model predictive approaach,” 2021.
+
