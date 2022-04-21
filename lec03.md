@@ -14,10 +14,10 @@ $$
 
 > **定义**：**李亚普诺夫函数 (Lyapunov function)** 
 >
-> 假设集合 $\mathbb{X}$ 是系统 $x^+ = f(x)$ 的正不变集 (positive invariant set)，若函数 $V : \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$ 满足以下条件
+> 假设集合 $\mathbb{X}$ 是系统 $x^+ = f(x)$ 的正不变集 (positive invariant set)，若函数 $V : \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$ ，存在 $K_\infin $ 函数 $\alpha_1, \alpha_2, \alpha_3$ 满足以下条件
 
 $$
-\alpha_2 (|x|) \leq V(x) \leq \alpha_1 (|x|) \\
+\alpha_1 (|x|) \leq V(x) \leq \alpha_2 (|x|) \\
 V(f(x)) - V(x) \leq - \alpha_3(|x|)
 $$
 > 则这个函数是李亚普诺夫函数。
@@ -68,6 +68,7 @@ $$
 $$
 
 ![偏移控制序列的最后一项输入是控制空间的任意采样](figures/Lec0302.png)
+
 图中 $\mathbb{X}$ 代表状态空间，  $\mathcal{X}_N$ 代表 N 步内能控状态的集合。
 
 因此我们可以得到以下关系
@@ -99,27 +100,114 @@ $$
 \ell ( x , u _ { N } ^ { 0 } ( 0 ; x ) )  \geq \alpha_3(|x|) \\
 V _ { f } ( f (  \mathbb{x} , \mathbb{u})) -V _ { f } ( \mathbb{x}) + \ell ( \mathbb{x} , \mathbb{u} ) \leq 0
 $$
-前者要求每步的 stage cost 是正的，后者要求 terminal cost $V_f(\cdot)$ 是在 $\mathbb{X_f} = \mathbb{R}^n$ 上的 [控制李亚普诺夫](https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E6%9D%8E%E4%BA%9E%E6%99%AE%E8%AB%BE%E5%A4%AB%E5%87%BD%E6%95%B8) 函数。
+前者要求每步的 stage cost 是正的，后者要求 terminal cost $V_f(\cdot)$ 是在 $\mathbb{X}_f = \mathbb{R}^n$ 上的 [控制李亚普诺夫](https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E6%9D%8E%E4%BA%9E%E6%99%AE%E8%AB%BE%E5%A4%AB%E5%87%BD%E6%95%B8) 函数。
 
 > 注意！
 >
-> 对于无约束系统， 这里寻找的 terminal cost 是$\mathbb{R}^n$上的李亚普诺夫函数，该系统也是全局渐进稳定的。显然，MPC全局渐进稳定的充分条件是存在全局的控制李亚普诺夫函数。但是，假如存在全局的控制李亚普诺夫函数，我们就不必采用 MPC 求解这个问题。我们可以采用 最小化全局控制李亚普诺夫函数 $u^\star = \operatorname{argmin}_u V(f(x, u))$  来找到该问题的最优解。
+> 对于无约束系统， 这里寻找的 terminal cost 是$\mathbb{R}^n$上的李亚普诺夫函数，该系统也是全局渐进稳定的。显然，MPC 全局渐进稳定的充分条件是存在全局的控制李亚普诺夫函数。但是，假如存在全局的控制李亚普诺夫函数，我们就不必采用 MPC 求解这个问题。我们可以采用 最小化全局控制李亚普诺夫函数 $u^\star = \operatorname{argmin}_u V(f(x, u))$  来找到该问题的最优解。
 
 ---
 
 ## 时不变系统的稳定性
 
-对于时不变系统来说，与上节的无约束系统最大的区别是存在时不变的状态约束 $\mathbb{X}$ 。 我们需要给出使得MPC满足状态约束情形下的稳定性条件。这里我们借助 terminal set 来给出这个条件。
+对于时不变系统来说，与上节的无约束系统最大的区别是存在时不变的状态约束 $\mathbb{X}$​ 。 为了给出满足状态约束的初始状态 ($x \in \mathbb{X}$​) 稳定的条件，我们借助 terminal set 来推导这个稳定性条件。我们假设存在这样的一个 [控制不动集](https://en.wikipedia.org/wiki/Positively_invariant_set) 
 
-参考上面对于
+[^(control invariant set)]: Blanchini, F. (1999). Set invariance in control. Automatica, 35(11), 1747–1767. https://doi.org/10.1016/S0005-1098(99)00113-2
 
+$\mathbb{X}_f$​，即对于$\forall x \in \mathbb{X}_f$​ 都存在输入 $\exist u \in \mathbb{U}$​ 使得 $f(x, u) \in \mathbb{X}_f$​ ，也就是说，当控系统的状态落入这个集合$\mathbb{X}_f$​后，控制器都存在至少一个输入将系统的状态保留在这个集合中。另外，我们还假定在这个集合中存在局部的控制李亚普诺夫函数$V_f$ ，即
+$$
+V _ { f } ( f ( x , u ) ) \leq V _ { f } ( x ) - \ell ( x , u )
+$$
+显然， 初始状态取在这个控制不动集中，控制系统是有稳定性保证的。对于模型预测控制系统，对于给定的初始状态$x$，如果控制器能够在 N 步后将状态控制到这个稳定的控制不动集中，那么这个初始状态就是稳定的 。这些有稳定性保证的初始状态组成的集合是$\mathcal{{X}_N}$。
 
-能够使 MPC 具有稳定性保证的集合是 $\mathcal{X}_N$ 我们借助
+我们的目的是证明最优代价递减 (optimal cost decrease) ，即最优代价函数为李亚普诺夫函数：
+$$
+V _ { N } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) ) \leq V _ { N } ^ { 0 } ( x ) - \ell ( x , \kappa _ { N } ( x ) ), \quad \forall x \in \mathcal{X}_N
+$$
+其中$\mathcal{X}_N$是步长为 N 时系统有稳定性保证的初始状态的集合。
 
+**最优代价函数递减**有两种方法证明。一种是类似上节证明无约束代价函数李亚普诺夫递减，构造偏移控制序列，借助控制不动集$\mathbb{X}_f$中存在局部的控制李亚普诺夫函数的假设进行证明。通过这个引理进行证明，需要假定存在最优控制，即$u\in \mathbb{U}$ 的集合$\mathbb{U}$为紧集。这个要求太强了，存在取不到只能趋近最优控制$u^*$ 的情况。另外一种证明方法是先证明最优代价函数单调 (monotonicity of optimal value function)，即
+$$
+V _ { k + 1 } ^ { 0 } ( x ) \leq V _ { k } ^ { 0 } ( x ) , \quad \forall x \in X _ { k } , \forall k \in \{ 0 , \ldots , N - 1 \} \\
+V _ { N } ^ { 0 } ( x ) \leq V _ { f } ( x ) , \quad \forall x \in \mathbb{X} _ { f }
+$$
+最后得到最优代价函数递减。证明**最优代价函数单调**从 terminal cost $V_f$ 出发，从 0 开始一步步增加步长，并外推出步长为 N 时的代价函数。
 
-我们这里不直接给出使MPC稳定
+下面简单给出证明最优代价函数单调的思路。
+
+### 由最优代价函数单调性证明最优代价函数递减性
+
+基于前面几节中提到的动态规划思路，我们可以得到如下贝尔曼等式
+$$
+V _ { 1 } ^ { 0 } ( x ) = \min _ { u \in \mathbb{U}} \{ \ell ( x , u ) + V _ { 0 } ^ { 0 } ( f ( x , u ) ) | f ( x , u ) \in \mathcal{X} _ { 0 } \}
+$$
+其中$V_0^0(\cdot)$即步长为 0 时的最优代价函数，即 terminal cost $V_f$ ；$\mathcal{X}_0$即步长为 0 时的有稳定性保证的集合，即 terminal set $\mathbb{X}_f$ ，代入上式并利用$V_f$是控制李亚普诺夫函数的假设有
+$$
+V _ { 1 } ^ { 0 } ( x ) = \min _ { u \in \mathbb{U}} \{ \ell ( x , u ) + V _ f( f ( x , u ) ) | f ( x , u ) \in \mathbb{X}_f \} \leq V_f(x)
+$$
+再对步长为$j$推导，利用$j+1$ 步时$\kappa_{j+1}(x)$ 比 $\kappa_{j}(x)$ 更优（因为预测步长更长了）
+$$
+\begin{aligned}
+V _ { j + 1 } ^ { 0 } ( x ) - V _ { j } ^ { 0 } ( x ) & 
+= \ell ( x , \kappa _ { j + 1 } ( x ) ) + V _ { j } ^ { 0 } ( f ( x , \kappa _ { j + 1 } ( x ) ) ) 
+- \ell ( x , \kappa _ { j } ( x ) ) - V _ { j - 1 } ^ { 0 } ( f ( x , \kappa _ { j } ( x ) ) ) \quad \forall x \in \mathcal{X} _ { j } \subseteq \mathcal{X} _ { j + 1 } \\
+& \leq \ell ( x , \kappa _ { j } ( x ) ) + V _ { j } ^ { 0 } ( f ( x , \kappa _ { j } ( x ) ) )
+- \ell ( x , \kappa _ { j } ( x ) ) - V _ { j - 1 } ^ { 0 } ( f ( x , \kappa _ { j } ( x ) ) ) \quad \forall x \in \mathcal{X} _ { j }  \\
+& =  V _ { j } ^ { 0 } ( f ( x , \kappa _ { j } ( x ) ) ) - V _ { j - 1 } ^ { 0 } ( f ( x , \kappa _ { j } ( x ) ) )
+
+\end{aligned}
+$$
+由于递推关系可得到
+$$
+V_j^0 (x) \leq V_{j -1} ^0 (x), \quad \forall x \in \mathcal{X}_{j-1} \\
+V _ { N } ^ { 0 } ( x ) \leq V _ { f } ( x ) , \quad \forall x \in \mathbb{X} _ { f } 
+$$
+最后证明该引理成立。
+
+基于该引理我们可以证明最优代价函数递减，即
+$$
+ \begin{aligned}
+ V _ { N } ^ { 0 } ( x ) = & \ell ( x , \kappa _ { N } ( x ) ) + V _ { N - 1 } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) ) \\
+ & = \ell ( x , \kappa _ { N } ( x ) ) + V _ { N } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) ) +  [ V _ { N - 1 } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) ) - V _ { N } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) ) ]  \\
+ & \leq \ell ( x , \kappa _ { N } ( x ) ) + V _ { N } ^ { 0 } ( f ( x , \kappa _ { N } ( x ) ) )
+ \end{aligned}
+$$
+
+### 稳定性条件
+
+根据以上证明我们可以推出最优代价函数是李亚普诺夫函数的条件为
+$$
+\begin{aligned}
+(1)\quad & f(\cdot), ~\ell, ~V_f ~ \text{continuous}; \quad \mathbb{X} ~ \text{closed}; \quad \mathbb{X}_f \subseteq \mathbb{X} ~ \text{compact}; \\
+(2)\quad & \forall x \in X _ { f }, ~ \exists u \in U ~ \text { s.t. }  \quad f ( x , u ) \in X _ { f }, ~ V _ { f } ( f ( x , u ) ) \leq V _ { f } ( x ) - \ell ( x , u ) \\
+(3)\quad & \ell ( x , u ) \geq \alpha _ { 1 } ( | x | ) , \quad \forall x \in \mathcal{X} _ { N } , ~ \forall u \in U \\
+(4)\quad & 0 \in \operatorname { int } ( X _ { f } ) , \quad V _ { f } ( x ) \leq \alpha _ { 2 } ( | x | ) , \quad \forall x \in \mathbb{X} _ { f }
+\end{aligned}{}
+$$
+，由此推出 MPC 稳定渐进，且吸引域为$\mathcal{X}_N$ 。
+
+> 写了这么多，用人话来说很简单：证明 MPC 稳定性的时候，只需要关心 terminal cost $V_f$ 是不是李亚普诺夫函数，以及 stage cost $\ell(x, u)$ 是否正定
 
 ---
 ## 时变系统的稳定性
 
+对于时变模型预测控制系统$x ( t + 1 ) = f ( x , \kappa _ { N } ( x , t ) , t )$的稳定性的证明过程与上面证明相仿，过程更加复杂，但结论相似。其稳定性条件为
+$$
+\begin{aligned}
+(1)\quad & f(\cdot), ~\ell, ~V_f ~ \text{continuous}; \quad \mathbb{X} ~ \text{closed}; \quad \mathbb{X}_f \subseteq \mathbb{X} ~ \text{compact}; \\
+(2)\quad & \forall x \in X _ { f }, ~ \exists u \in U ~ \text { s.t. }  \quad f ( x , u ) \in X _ { f }, ~ V _ { f } ( f ( x , u ) ) \leq V _ { f } ( x ) - \ell ( x , u ) \\
+(3)\quad & \ell ( x , u , t) \geq \alpha _ { 1 } ( | x | ) , \quad \forall x \in \mathcal{X} _ { N } (t) , ~ \forall u \in \mathbb{U}(t) \\
+(4)\quad & V _ { f } ( x ) \leq \alpha _ { 2 } ( | x | ) , \forall x \in \mathbb{X} _ { f }\\
+(5)\quad & V _ { N } ^ { 0 } ( x , t ) \leq \alpha ( | x | ) , ~\forall x \in \mathcal{X} _ { N } ( t ) , ~\forall t \in N \\
+\end{aligned}{}
+$$
+由以上条件可以推出最优代价函数是李亚普诺夫函数，即
+$$
+\left. \begin{array} { l } { \alpha _ { 1 } ( | x | ) \leq V _ { N } ^ { 0 } ( x , t ) \leq \alpha _ { 2 } ( | x | ) } \\ 
+{ V _ { N } ^ { 0 } ( f ( x , \kappa _ { N } ( x , t ) , t ) , t + 1 ) \leq V _ { N } ^ { 0 } ( x , t ) - \alpha _ { 1 } ( | x | ) } \end{array} \right.
+$$
+即 MPC 渐进稳定，吸引子为 ${0}$ ，吸引域为$\mathcal{X}_N(0)$ 。
+
 参考文献
+
+[1] J. B. Rawlings, D. Q. Mayne, and M. Diehl, *Model predictive control: theory, computation, and design*, 2nd edition. Madison, Wisconsin: Nob Hill Publishing, 2017.
