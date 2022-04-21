@@ -1,4 +1,4 @@
-# 第三节 渐进稳定性及证明
+# Lec03 渐进稳定性及证明
 
 本节主要介绍 MPC 的稳定性理论及渐进稳定性的证明。
 
@@ -58,7 +58,7 @@ $$
 $$
 V _ { N } ^ { 0 } ( x ^ { + } ) \stackrel { \text { def. } } { = } V _ { N } ( x ^ { + } , \boldsymbol{u} _ { N } ^ { 0 } ( x ^ { + } ) ) 
 $$
-由于最优性，任意改变输入序列第 N 项的输入，$V _ { N } ^ { 0 } ( x ^ { + } )$ 应该是任意输入序列$\tilde { \boldsymbol u }$对应的代价函数$V _ { N } ( x ^ { + }, \tilde{\boldsymbol{u}})$的极小值。这个任意输入序列叫做偏移控制序列 (shifted control sequence)，即只有最后一项输入为控制空间$\mathbb{U}$ 中的任意输入，而前$N-1$项输入为最优控制序列的输入，
+由于最优性，任意改变输入序列第 N 项的输入，$V _ { N } ^ { 0 } ( x ^ { + } )$ 应该是任意输入序列 $\tilde { \boldsymbol u }$ 对应的代价函数$V _ { N } ( x ^ { + }, \tilde{\boldsymbol{u}})$的极小值。这个任意输入序列叫做偏移控制序列 (shifted control sequence)，即只有最后一项输入为控制空间 $\mathbb{U}$ 中的任意输入，而前$N-1$项输入为最优控制序列的输入，
 $$
 \tilde { \boldsymbol u } = ( u _ { N } ^ { 0 } ( 1 ; x ) , u _ { N } ^ { 0 } ( 2 ; x ) , \ldots , u _ { N } ^ { 0 } ( N - 1 ; x ) , \mathbb { u } )
 $$
@@ -66,6 +66,10 @@ $$
 $$
 \tilde { \boldsymbol x } = ( ~ x _ { N } ^ { 0 } ( 1 ; x ) , ~  x _ { N } ^ { 0 } ( 2 ; x ) , ~ \ldots ~  , ~  x _ { N } ^ { 0 } ( N ; x ), ~  f ( x _ { N } ^ { 0 } ( N ; x ) , \mathbb{u} ))
 $$
+
+![偏移控制序列的最后一项输入是控制空间的任意采样](figures/Lec0302.png)
+图中 $\mathbb{X}$ 代表状态空间，  $\mathcal{X}_N$ 代表 N 步内能控状态的集合。
+
 因此我们可以得到以下关系
 $$
 \underbrace { V _ { N } ^ { 0 } ( x ^ { + } ) } _ { ( 1 ) } \leq  \underbrace{V _ { N } ( x ^ { + }, \tilde{\boldsymbol{u}})}_{(3)}
@@ -90,21 +94,32 @@ $$
 $$
 V _ { f } ( f (  \mathbb{x} , \mathbb{u})) -V _ { f } ( \mathbb{x}) + \ell ( \mathbb{x} , \mathbb{u} )  - \ell ( x , u _ { N } ^ { 0 } ( 0 ; x ) )   + \alpha_3(|x|) \leq 0
 $$
- 从上式得出，$V_N^0(\cdot)$ 是李亚普诺夫函数的两个充分不必要条件分别为
+从上式得出，$V_N^0(\cdot)$ 是李亚普诺夫函数的两个充分不必要条件分别为
 $$
 \ell ( x , u _ { N } ^ { 0 } ( 0 ; x ) )  \geq \alpha_3(|x|) \\
 V _ { f } ( f (  \mathbb{x} , \mathbb{u})) -V _ { f } ( \mathbb{x}) + \ell ( \mathbb{x} , \mathbb{u} ) \leq 0
 $$
-前者要求每步的 stage cost 是正的，后者要求 terminal cost $V_f(\cdot)$ 是 [控制李亚普诺夫](https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E6%9D%8E%E4%BA%9E%E6%99%AE%E8%AB%BE%E5%A4%AB%E5%87%BD%E6%95%B8) 函数。
+前者要求每步的 stage cost 是正的，后者要求 terminal cost $V_f(\cdot)$ 是在 $\mathbb{X_f} = \mathbb{R}^n$ 上的 [控制李亚普诺夫](https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E6%9D%8E%E4%BA%9E%E6%99%AE%E8%AB%BE%E5%A4%AB%E5%87%BD%E6%95%B8) 函数。
 
 > 注意！
 >
-> 显然，当需要系统全局渐进稳定时，意味着存在全局的控制李亚普诺夫函数。但是，假如存在全局的控制李亚普诺夫函数，我们就不必采用 MPC 求解这个问题。我们可以采用 最小化全局控制李亚普诺夫函数 $u^\star = \operatorname{argmin}_u V(f(x, u))$  来找到该问题的最优解。
+> 对于无约束系统， 这里寻找的 terminal cost 是$\mathbb{R}^n$上的李亚普诺夫函数，该系统也是全局渐进稳定的。显然，MPC全局渐进稳定的充分条件是存在全局的控制李亚普诺夫函数。但是，假如存在全局的控制李亚普诺夫函数，我们就不必采用 MPC 求解这个问题。我们可以采用 最小化全局控制李亚普诺夫函数 $u^\star = \operatorname{argmin}_u V(f(x, u))$  来找到该问题的最优解。
 
-### 形象理解
+---
 
 ## 时不变系统的稳定性
 
+对于时不变系统来说，与上节的无约束系统最大的区别是存在时不变的状态约束 $\mathbb{X}$ 。 我们需要给出使得MPC满足状态约束情形下的稳定性条件。这里我们借助 terminal set 来给出这个条件。
+
+参考上面对于
+
+
+能够使 MPC 具有稳定性保证的集合是 $\mathcal{X}_N$ 我们借助
+
+
+我们这里不直接给出使MPC稳定
+
+---
 ## 时变系统的稳定性
 
 参考文献
