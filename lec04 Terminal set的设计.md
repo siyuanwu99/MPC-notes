@@ -162,6 +162,8 @@ $$V_{f}(f(x))\leq V_{f}(x)-l(x,u) \leq c$$
 
 当c减小到一定值时，$V_{f}$水平子集的外接多面体顶点都会在约束容许集内，将此时的水平子集作为终端集。
 
+代码实例请参考: [方法二生成四旋翼无人机系统终端集](https://github.com/smoggy-P/MPC-Collision-Avoidance/blob/2de1c6459e20e53177c2861ceefe3a305f9139b1/MPC_controller.py)。
+
 $$x_N \in \mathcal{X_f}\Rightarrow \frac{1}{2}x_N^TPx_N\leq c$$
 
 ## 3. 通过增大终端代价函数权重保证终端集性质的满足
