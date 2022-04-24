@@ -1,0 +1,63 @@
+# 混合逻辑模型预测控制 (Hybrid Model Predictive Control)
+
+本节介绍基于混合逻辑系统设计模型预测控制器的方法。
+
+**混合逻辑动力系统**(Mixed-Logical-Dynamical systems, MLD system)是指系统动力学$x^+ = f(x, u)$ 中既有连续变量又有逻辑变量的系统。典型的混合逻辑系统可以是由多个连续子系统组成的**分段系统**，每个系统在某些情况下运行；可以是具有**分段线性的输出函数**的线性系统；也可以是**离散输入**（输入为开或者关）。我们以分段系统为例：
+$$
+x ^ { + } = \left\{ \begin{array} { c l l }{ 0.8 x + u } & \text { if } &{ x \geq 0 }\\{ - 0.8 x + u} & \text { if } & {x < 0 } \end{array} \right.
+$$
+是由两个连续子系统和逻辑变量组成的混合逻辑系统。对于混合逻辑系统的模型预测控制，我们可以将逻辑规则转化为线性整数不等式，在连续变量中加入逻辑变量后，将混合逻辑关系转化为混合整数线性关系，构建模型预测控制问题，并采用混合整数线性规划（MILP）或者混合整数二次规划（MIQP）的方法进行求解。
+
+## MLD系统的转化
+
+考虑如上系统
+$$
+x ^ { + } = \left\{ \begin{array} { c l l }{ 0.8 x + u } & \text { if } &{ x \geq 0 }\\{ - 0.8 x + u} & \text { if } & {x < 0 } \end{array} \right.
+$$
+及状态约束$|x| \leq 10$和输入约束 $|u| \leq 10$ 
+
+考虑布尔变量 $\delta \in \mathbb{B} = \{0, 1\}$ ，我们可以用$\delta$ 是否为真（$\delta = 1$）来表示$x \geq 0$ 是否成立，即构建逻辑关系
+$$
+[\delta = 1] \Leftrightarrow [x \geq 0]
+$$
+当 $\delta = 1$ 时，$ x \geq 0$ ； 反之，$x < 0$；我们可以将如上逻辑关系转化为含有 $\delta$ 和$x$的混合整数线性不等式(Mixed-integer linear inequalities)
+$$
+\left\{ \begin{array} { r } { - m \delta \leq x - m } \\ { - ( M + \varepsilon ) \delta \leq - x - \varepsilon } \end{array} \right.
+$$
+式中 $m= -10$ ，代表 $x$ 的下界； $M = 10$，代表 $x$ 的上界； $\varepsilon$ 代表一个大于0的很小的量。可以验证，当 $x \geq 0 $且$\delta = 1$  或 当 $x < 0 $且$\delta = 0$ 时，两式同时成立；当 $x < 0 $且$\delta = 1$  或 当 $x \geq 0 $且$\delta = 0$ 时，两式不同时成立。这样，我们就把布尔变量$\delta$ 和混合系统的判断条件构建了联系。
+
+下一步，我们用布尔变量$\delta$ 和原状态改写整个系统的状态方程
+$$
+x ^ + = (0.8 x + u) \delta + (-0.8 x + u) (1 - \delta) \\
+=  1.6x \delta − 0.8x + u
+$$
+这里有的同学会说改写后的系统的状态方程是一个非线性方程，我们可以借助辅助实变量$z = x \delta$ 来讲状态方程变成线性。但是引入新变量会引入新的约束，这些约束是混合整数不等式，即
+$$
+\left\{ \begin{array} { l } {z \leq M \delta} \\ { z \geq m \delta } \\ { z \leq x - m ( 1 - \delta ) } \\ { z \geq x - M ( 1 - \delta ) } \end{array} \right.
+$$
+经过如上推导，我们得到了等价的状态方程及约束为：
+$$
+x^+ = 1.6 z - 0.8 x + u \\
+\text{subject to} \left\{ \begin{array} { l } {|x| \leq 10} \\ { |u| \leq 10} \\{ - m \delta \leq x - m } \\ { - ( M + \varepsilon ) \delta \leq - x - \varepsilon } \\ {z \leq M \delta} \\ { z \geq m \delta } \\ { z \leq x - m ( 1 - \delta ) } \\ { z \geq x - M ( 1 - \delta ) } \end{array} \right.
+$$
+
+关于如何将逻辑关系$[ \delta = 1 ] \Leftrightarrow [ f ( x ) \geq c ]$ 转换为等价的混合整数线性不等式，这里给出一个转换表格
+
+| 逻辑关系                                                     | 混合整数线性不等式 (MIL inequalities)                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| $[ \delta = 1 ] \Leftrightarrow [ f ( x ) \geq c ]$          | $\left\{ \begin{array} { l } { ( c - m ) \delta \leq f ( x ) - m } \\ { ( M - c + \epsilon ) \delta \geq f ( x ) - c + \epsilon } \end{array} \right.$ |
+| $[ \delta = 1 ] \Leftrightarrow [ f ( x ) \leq c ]$          | $\left\{ \begin{array} { l } { ( M - c ) \delta \leq M - f ( x ) } \\ { ( c + \epsilon - m ) \delta \geq \epsilon + c - f ( x ) } \end{array} \right.$ |
+| $[ \delta = 1 ] \Leftrightarrow [ \sigma = 1 ] \wedge [ \gamma = 1 ]$ | $\left\{ \begin{array} { l } { - \sigma + \delta \leq 0 } \\ { - \gamma + \delta \leq 0 } \\ { \sigma + \gamma - \delta \leq 1 } \end{array} \right.$ |
+| $[ \delta = 1 ] \Leftrightarrow [ \sigma = 1 ] \vee [ \gamma = 1 ]$ | $\left\{ \begin{array} { c } { \sigma - \delta \leq 0 } \\ { \gamma - \delta \leq 0 } \\ { - \sigma - \gamma + \delta \leq 0 } \end{array} \right.$ |
+| $[ \delta = 0 ] \Rightarrow [ g = 0 ] , [ \delta = 1 ] \Rightarrow [ g = f ( x ) ]$ | $\left\{ \begin{array} { l } { m \delta \leq g \leq M \delta } \\ { - M ( 1 - \delta ) \leq g - f ( x ) \leq - m ( 1 - \delta ) } \end{array} \right.$ |
+
+一般来说，混合逻辑动力系统 MLD 的模型可以写成如下形式
+$$
+\left\{ \begin{array} { l }{ x ^ { + } = A x + B _ { 1 } u + B _ { 2 } \delta + B _ { 3 } z }\\{ y = C x + D _ { 1 } u + D _ { 2 } \delta + D _ { 3 } z } \end{array} \right. \\
+\text{subject to} \left\{ \begin{array}{l} { E _ { 2 } \delta + E _ { 3 } z \leq E _ { 4 } x + E _ { 1 } u + E _ { 5 } } \\ {G x _ { c } + H u _ { c } + \psi \leq 0}\end{array} \right. \\
+\text{where} \left\{ \begin{array}{l} {x = \left[ \begin{array} { l } { x _ { c } } \\ { x _ { d } } \end{array} \right] \in \mathbb{R} ^  { n _ { c } } \times \mathbb{B} ^  { n _ { d } }} \\ {u = \left[ \begin{array} { l } { u _ { c } } \\ { u _ { d } } \end{array} \right] \in \mathbb{R} ^  { m _ { c } } \times \mathbb{B} ^  { m _ { d } }} \\ {y = \left[ \begin{array} { l } { y _ { c } } \\ { y _ { d } } \end{array} \right] \in \mathbb{R} ^  { p _ { c } } \times \mathbb{B} ^  { p _ { d } }} \\ {\delta \in \mathbb{B} ^  { r _ { d } } , z \in \mathbb{R} ^  { r _ { c } }} \end{array} \right.
+$$
+
+## MPC 设计
+
+理论上来说，
