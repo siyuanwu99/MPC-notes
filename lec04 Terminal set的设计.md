@@ -1,4 +1,4 @@
-# MPC 终端集（Terminal set）的设计
+# Lec 4 MPC 终端集（Terminal set）的设计
 
 ## 简介
 
