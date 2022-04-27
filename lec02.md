@@ -1,6 +1,7 @@
 # Lec 2  从 LQR 到 MPC
 
 ## 引子：凸优化（Convex Optimization）
+
 MPC 的实际上就是循环求解凸优化问题，所以有必要简单铺垫相关知识。一本大家都推荐的参考书应该是 Boyd 的 [《凸优化》](https://web.stanford.edu/~boyd/cvxbook/)。
 
 优化问题标准型如下，其中$u$是决策变量（decision variable），$f(u)$是代价函数（cost function），$g(u)$是不等式约束，$h(u)$是等式约束。所有的约束定义了可行域（feasible set）。简单来说，我们想要找一个$u$，让代价函数最小。若想让这个优化问题是凸优化问题，我们需要代价函数和可行域都是凸的。具体来说，我们需要$f(u) 和 g(u)$是凸函数，$h(u)$是仿射的（affine）。
@@ -16,12 +17,14 @@ $$
 $$
 
 如果一个问题能被建模成是凸优化问题，我们就很高兴，原因有两个
+
 - 局部最优解也就是全局最优解。
 - 已经有成熟的算法处理这类问题了，也就是说，对问题完成建模之后可以直接丢给求解器。
 
 ## 线性二次型调节器 （LQR）
 
-### 有限阶段 （Finite horizon）的 LQR 
+### 有限阶段 （Finite horizon）的 LQR
+
 Finite horizon LQR 是后续方法的基础，它对应的优化问题可以写成如下形式：
 $$
 \begin{equation}
@@ -34,7 +37,7 @@ $$
 $$
 其中代价函数$V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)$由两部分组成：$\ell(x(k), u(k))$是**阶段代价（stage cost）**，$V_{\mathrm{f}}$是**终端代价（terminal cost）**。我们想让这个优化问题是凸的，所以把这两项都写成二次型的形式，即
 $$
-\begin{equation} 
+\begin{equation}
 \begin{aligned}
     l(x(k), u(k))=& x(k)^T Q x(k) + u(k)^T R u(k)\\
     V_f(x(N))=& x(N)^T P x(N)
@@ -69,9 +72,9 @@ $$
 如果我们最小化 $\ell(x(N-1), u(N-1))+V_f(x(N))$，就可以得到在 $N-1$ 阶段的应该采用的最优输入 $u_{N-1}^{0}$。以及在采用 $u_{N-1}^{0}$ 的情况下，对应下一个阶段的最优状态 $x_{N}^{0}$ 和最优值函数（optimal cost to go）$V_{N-1}^{0} = min\{\ell(x(N-1), u(N-1))+V_f(x(N))\}$。具体的表达如下所示：
 $$
 \begin{equation}
-\begin{aligned} 
-u_{N-1}^{0} &=K(N-1) x(N-1) \\ 
-x_{N}^{0} &=(A+B K(N-1)) x(N-1) \\ 
+\begin{aligned}
+u_{N-1}^{0} &=K(N-1) x(N-1) \\
+x_{N}^{0} &=(A+B K(N-1)) x(N-1) \\
 V_{N-1}^{0} &=(1 / 2) x(N-1)^{T} \Pi(N-1) x(N-1)\\
 \end{aligned}
 \end{equation}
@@ -80,7 +83,7 @@ $$
 
 $$
 \begin{equation}
-\begin{aligned} 
+\begin{aligned}
 K(N-1) &=-\left(B^{T} P B+R\right)^{-1} B^{T} P A\\
 \Pi(N-1) &=Q+A^{T} P A-A^{T} P B\left(B^{T} P B+R\right)^{-1} B^{T} P A
 \end{aligned}
@@ -129,7 +132,8 @@ V_{k}^{0}(x)=(1 / 2) x^{T} \Pi(k) x \quad k=N, N-1, \ldots, 0
 $$
 这个最优值函数很有意思，它代表了从第$k$个阶段代价以后的所有代价函数的最优值。
 
-### 无限阶段 （infinite horizon）的 LQR 
+### 无限阶段 （infinite horizon）的 LQR
+
 当 horizon 从$N$不断增大，知道无穷的时候，finite horizon LQR 就延伸成了 infinite horizion LQR，优化问题如下：
 $$
 \begin{equation}
@@ -146,32 +150,36 @@ $$
 $$
 这就是离散代数黎卡提方程 Discrete Algebraic Riccati Equation (DARE)。通过解这个方程，我们就可以得到 Infinite horizon LQR 的最优输入，即：
 $$
-u^{0}(x)=K x \\ 
+u^{0}(x)=K x \\
 K=-\left(B^{T} \Pi B+R\right)^{-1} B^{T} \Pi A
 $$
 此时的最优代价函数为：
 $$
 V^{0}(x)=(1 / 2) x^{T} \Pi x
 $$
+
 ## 模型预测控制（MPC）
+
 MPC 的优化问题的形式如下：
 $$
 \begin{equation}
 \begin{aligned}
 \min_{\boldsymbol{u}_{N}} \quad & V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)= \sum_{k=0}^{N-1}\{\ell(x(k), u(k))\}+V_{\mathrm{f}}(x(N)) \\
 \textrm{subject to} \quad & x(0)=x_{0} \\
-& x(k+1)=f(x(k), u(k)), \forall k \\ & (x(k), u(k)) \in \mathbb{Z}, \forall k \\ 
+& x(k+1)=f(x(k), u(k)), \forall k \\ & (x(k), u(k)) \in \mathbb{Z}, \forall k \\
 & x(N) \in \mathbb{X}_{\mathrm{f}}\\
 \end{aligned}
 \end{equation}
 $$
 
 和 Finite horizon LQR 相比，MPC 有几个区别：
+
 - 可以处理非线性模型。
 - 当模型是线性的时候，可以通过设计合理的终端约束（terminal constraint) 和终端代价（terminal cost）来保证系统稳定性（stability）。具体的证明在之后的章节会讲到。
 - 可以根据任务来设计各种各样的约束，比如可以实现动态避障。
 
 ## 总结
+
 在本文中，我们介绍了 finite horizon LQR、infinite horizon LQR、MPC。那么这三种方法孰优孰劣呢？请见下表：
 | Method | Stability | Constraints | Model |
 | ----------- | ----------- | ----------- | ----------- |

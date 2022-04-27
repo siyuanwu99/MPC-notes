@@ -14,7 +14,7 @@ $$
 $$
 x ^ { + } = \left\{ \begin{array} { c l l }{ 0.8 x + u } & \text { if } &{ x \geq 0 }\\{ - 0.8 x + u} & \text { if } & {x < 0 } \end{array} \right.
 $$
-及状态约束$|x| \leq 10$和输入约束 $|u| \leq 10$ 
+及状态约束$|x| \leq 10$和输入约束 $|u| \leq 10$
 
 考虑布尔变量 $\delta \in \mathbb{B} = \{0, 1\}$ ，我们可以用$\delta$ 是否为真（$\delta = 1$）来表示$x \geq 0$ 是否成立，即构建逻辑关系
 $$
@@ -53,9 +53,9 @@ $$
 
 一般来说，混合逻辑动力系统 MLD 的模型可以写成如下形式
 $$
-\left\{ \begin{array} { l }{ x ^ { + } = A x + B _ { 1 } u + B _ { 2 } \delta + B _ { 3 } z }\\{ y = C x + D _ { 1 } u + D _ { 2 } \delta + D _ { 3 } z } \end{array} \right. \\
-\text{subject to} \left\{ \begin{array}{l} { E _ { 2 } \delta + E _ { 3 } z \leq E _ { 4 } x + E _ { 1 } u + E _ { 5 } } \\ {G x _ { c } + H u _ { c } + \psi \leq 0}\end{array} \right. \\
-\text{where} \left\{ \begin{array}{l} {x = \left[ \begin{array} { l } { x _ { c } } \\ { x _ { d } } \end{array} \right] \in \mathbb{R} ^  { n _ { c } } \times \mathbb{B} ^  { n _ { d } }} \\ {u = \left[ \begin{array} { l } { u _ { c } } \\ { u _ { d } } \end{array} \right] \in \mathbb{R} ^  { m _ { c } } \times \mathbb{B} ^  { m _ { d } }} \\ {y = \left[ \begin{array} { l } { y _ { c } } \\ { y _ { d } } \end{array} \right] \in \mathbb{R} ^  { p _ { c } } \times \mathbb{B} ^  { p _ { d } }} \\ {\delta \in \mathbb{B} ^  { r _ { d } } , z \in \mathbb{R} ^  { r _ { c } }} \end{array} \right.
+\left\{ \begin{array} { l }{ x ^ { + } = A x + B _{ 1 } u + B_ { 2 } \delta + B _{ 3 } z }\\{ y = C x + D_ { 1 } u + D _{ 2 } \delta + D_ { 3 } z } \end{array} \right. \\
+\text{subject to} \left\{ \begin{array}{l} { E _{ 2 } \delta + E_ { 3 } z \leq E _{ 4 } x + E_ { 1 } u + E _{ 5 } } \\ {G x_ { c } + H u _{ c } + \psi \leq 0}\end{array} \right. \\
+\text{where} \left\{ \begin{array}{l} {x = \left[ \begin{array} { l } { x _ { c } } \\ { x _ { d } } \end{array} \right] \in \mathbb{R} ^  { n_ { c } } \times \mathbb{B} ^  { n _{ d } }} \\ {u = \left[ \begin{array} { l } { u _ { c } } \\ { u _ { d } } \end{array} \right] \in \mathbb{R} ^  { m_ { c } } \times \mathbb{B} ^  { m _{ d } }} \\ {y = \left[ \begin{array} { l } { y _ { c } } \\ { y _ { d } } \end{array} \right] \in \mathbb{R} ^  { p_ { c } } \times \mathbb{B} ^  { p _{ d } }} \\ {\delta \in \mathbb{B} ^  { r_ { d } } , z \in \mathbb{R} ^  { r _ { c } }} \end{array} \right.
 $$
 
 ## MPC 设计
