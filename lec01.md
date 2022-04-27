@@ -1,11 +1,14 @@
-# Lec 1 简介和稳定性理论
+#! https://zhuanlan.zhihu.com/p/506342644
 
-本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico 教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
-<https://zhuanlan.zhihu.com/p/506342644>
+# [MPC] Lec 1 简介和稳定性理论
+
+> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。
+
+本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本
 
 ## 目录
 
-- [Lec 1 简介和稳定性理论](#lec-1-简介和稳定性理论)
+- [[MPC] Lec 1 简介和稳定性理论](#mpc-lec-1-简介和稳定性理论)
   - [目录](#目录)
   - [1.1 简介](#11-简介)
     - [1.1.1 什么是模型预测控制（MPC）？](#111-什么是模型预测控制mpc)
@@ -370,33 +373,33 @@ $$
 
 ## 1.3 参考
 
-[1] Rafal, Steven, “Discrete dynamic optimization applied to on-line optimal control”, AIChE Journal, 1968.
+[1] Rafal, Steven, "Discrete dynamic optimization applied to on-line optimal control", AIChE Journal, 1968.
 
-[2] Qin, Badgwell, “A survey of industrial model predictive control technology”, Control Engineering Practice, 2003
+[2] Qin, Badgwell, "A survey of industrial model predictive control technology", Control Engineering Practice, 2003
 
-[3] Hegrenaes, Gravdahl, Tondel, “Spacecraft attitude control using explicit model predictive control”, Automatica, 2005
+[3] Hegrenaes, Gravdahl, Tondel, "Spacecraft attitude control using explicit model predictive control", Automatica, 2005
 
-[4] Silani, Lovera, “Magnetic spacecraft attitude control: A survey and some new results”, Control Engineering Practice, 2005
+[4] Silani, Lovera, "Magnetic spacecraft attitude control: A survey and some new results", Control Engineering Practice, 2005
 
-[5] Falcone et al., “Predictive active steering control for autonomous vehicle systems”, IEEE Trans. Control Systems Technology, 2007
+[5] Falcone et al., "Predictive active steering control for autonomous vehicle systems", IEEE Trans. Control Systems Technology, 2007
 
-[6] Borhan et al., “MPC-based energy management of a power-split hybrid electric vehicle”, IEEE Trans. Control Systems Technology, 2012
+[6] Borhan et al., "MPC-based energy management of a power-split hybrid electric vehicle", IEEE Trans. Control Systems Technology, 2012
 
-[7] Di Cairano et al., “Model predictive idle speed control: Design, analysis, and experimental evaluation”, IEEE Trans. Control Systems Technology, 2012
+[7] Di Cairano et al., "Model predictive idle speed control: Design, analysis, and experimental evaluation", IEEE Trans. Control Systems Technology, 2012
 
-[8] Di Cairano et al., “Vehicle yaw stability control by coordinated active front steering and differential braking in the tire sideslip angles domain”, IEEE Trans. Control Systems Technology, 2013
+[8] Di Cairano et al., "Vehicle yaw stability control by coordinated active front steering and differential braking in the tire sideslip angles domain", IEEE Trans. Control Systems Technology, 2013
 
-[9] Ocampo-Martinez et al., “Hierarchical and decentralised model predictive control of drinking water networks: Application to Barcelona case study”, IET Control Theory & Applications, 2012
+[9] Ocampo-Martinez et al., "Hierarchical and decentralised model predictive control of drinking water networks: Application to Barcelona case study", IET Control Theory & Applications, 2012
 
-[10] Oldewurtel et al., “Use of model predictive control and weather forecasts for energy efficient building climate control", Energy and Buildings, 2012
+[10] Oldewurtel et al., "Use of model predictive control and weather forecasts for energy efficient building climate control", Energy and Buildings, 2012
 
-[11] Sturzenegger et al., “Model predictive climate control of a Swiss office building: Implementation, results, and costbenefit analysis", IEEE Trans. Control Systems Technology, 2013
+[11] Sturzenegger et al., "Model predictive climate control of a Swiss office building: Implementation, results, and costbenefit analysis", IEEE Trans. Control Systems Technology, 2013
 
-[12] Parisio, Rikos, Glielmo, “A model predictive control approach to microgrid operation optimization”, IEEE Trans. Control Systems Technology, 2014
+[12] Parisio, Rikos, Glielmo, "A model predictive control approach to microgrid operation optimization", IEEE Trans. Control Systems Technology, 2014
 
-[13] Ouammi et al., “Coordinated model predictive-based power flows control in a cooperative network of smart microgrids”, IEEE Trans. Smart Grid, 2015
+[13] Ouammi et al., "Coordinated model predictive-based power flows control in a cooperative network of smart microgrids", IEEE Trans. Smart Grid, 2015
 
-[14] J. B. Rawlings, D. Q. Mayne, and M. Diehl, “Model predictive control: theory, computation, and design”, Appendix B, 2017
+[14] J. B. Rawlings, D. Q. Mayne, and M. Diehl, "Model predictive control: theory, computation, and design", Appendix B, 2017
 
 [15] H. K. Khalil, "Nonlinear Systems", Chapter 4, 2002
 

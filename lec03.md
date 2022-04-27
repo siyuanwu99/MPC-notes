@@ -1,6 +1,9 @@
 #! https://zhuanlan.zhihu.com/p/506342137
 
-# Lec 3 渐进稳定性及证明
+# [MPC] Lec 3 渐进稳定性及证明
+
+> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。
+
 
 本节主要介绍 MPC 的稳定性理论及渐进稳定性的证明。
 
@@ -208,5 +211,6 @@ $$
 
 参考文献
 
-[1]J. B. Rawlings, D. Q. Mayne, and M. Diehl, Model predictive control: theory, computation, and design, 2nd edition. Madison, Wisconsin: Nob Hill Publishing, 2017.
-[2] F. Blanchini "Set invariance in control", Automatica, 35(11), 1747–1767, 1999 <https://doi.org/10.1016/S0005-1098(99)00113-2>
+[1] S. Grammatico, “Lecture 4. model predictive control” 2022
+[2]J. B. Rawlings, D. Q. Mayne, and M. Diehl, Model predictive control: theory, computation, and design, 2nd edition. Madison, Wisconsin: Nob Hill Publishing, 2017.
+[3] F. Blanchini "Set invariance in control", Automatica, 35(11), 1747–1767, 1999 <https://doi.org/10.1016/S0005-1098(99)00113-2>

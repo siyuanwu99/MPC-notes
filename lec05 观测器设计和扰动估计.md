@@ -1,5 +1,8 @@
 #! https://zhuanlan.zhihu.com/p/506347081
-# Lec 5 观测器设计和扰动估计
+# [MPC] Lec 5 观测器设计和扰动估计
+
+> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。
+
 
 ## 5.1 轨迹跟踪问题（reference tracking）
 
@@ -50,17 +53,15 @@ $$
 
 对于终端集，我们需要在原来终端集的基础上加上 $x_{ref}$ 的偏置，通过这个偏置，之前所证明的稳定性在这里也同样适用，这一章里就不再赘述了。
 
-<div align=center>
-    <img width="380" src=figures/lec0501.png />
-</div>
+![](figures/lec0501.png)
+
 
 ## 5.2 全状态反馈下的偏置误差估计 (Offset-free MPC with state feedback)
 
 上述问题中我们并没有考虑模型的噪声 (Noise) 和偏置误差 (Disturbance)，这一节中我们将学习通过 MPC 来估计偏置误差并消除其对控制的影响。首先我们对噪声和误差进行定义与建模，其中噪声指期望为 0 的随机变量，而偏置指一个未知的常数变量。举例来说，噪声可以出现在传感器上，假设我需要测量一个瓜有多重，由于噪声的影响，我有可能得到一个比实际重量偏大的值，也有可能得到偏小的值，但是如果我测量了无限多次，这个误差的期望会是 0。而偏置误差则是指我在称上粘了吸铁石，测量重量始终比实际重量大，并且我并不知道吸铁石有多重，通过设计 MPC 我们就能对吸铁石的重量进行估计。
 
-<div align=center>
-    <img width="380" src=figures/lec0502.png />
-</div>
+![](figures/lec0502.png)
+
 
 我们分别用 $d$ 和 $v$ 来表示偏置和噪声，其中 $d$ 是常数并且 $\mathbb{E}[v(t)=0]$，并且我们目前只考虑测量阶段的误差，系统模型可以被改写为：
 $$
@@ -86,7 +87,6 @@ d
 B \\
 0
 \end{bmatrix}u\\
-
 y&=\begin{bmatrix}
   C & I
 \end{bmatrix}\begin{bmatrix}
@@ -131,9 +131,8 @@ Cx_{ref}+\hat{d}\in\mathbb{Y}
 \end{cases}
 $$
 此时 OTS 问题需要被在线解决 (online)，因为我们并不能提前知道整个控制过程中的 $\hat{d}$ 的值，这需要每一步迭代计算才能得到。最终得到整个控制流程图如下：
-<div align=center>
-    <img width="380" src=figures/lec0503.png />
-</div>
+
+![](figures/lec0503.png)
 
 ## 5.3 输出反馈下的偏置误差估计 (Offset-free MPC with Output feedback)
 
@@ -167,7 +166,6 @@ d
 B \\
 0
 \end{bmatrix}u\\
-
 y&=\begin{bmatrix}
   C & C_d
 \end{bmatrix}\begin{bmatrix}
@@ -206,7 +204,6 @@ B \\
   \hat{x}\\
   \hat{d}
 \end{bmatrix})\\
-
 &=\tilde{A}\begin{bmatrix}
 \hat{x} \\
 \hat{d}
@@ -222,9 +219,9 @@ B \\
 \end{align*}
 $$
 为了使观测器收敛，我们需要配置 $\tilde{L}$ 矩阵使得矩阵 $\tilde{A}-\tilde{L}\tilde{C}$ 是稳定的，即所有特征值模长都小于等于 1。至此我们就完成了观测器的设计。结合之前的 OTS 问题，此时的控制流程图如下：
-<div align=center>
-    <img width="380" src=figures/lec0504.png />
-</div>
+
+![](figures/lec0504.png)
+
 
 ## 5.4 参考
 

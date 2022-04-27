@@ -1,5 +1,5 @@
 #! https://zhuanlan.zhihu.com/p/506347004
-# Lec 6 混合逻辑模型预测控制 (Hybrid Model Predictive Control)
+# [MPC] Lec 6 混合逻辑模型预测控制 (Hybrid Model Predictive Control)
 
 本节介绍基于混合逻辑系统设计模型预测控制器的方法。
 
