@@ -12,10 +12,8 @@
 
 - 线性系统
   $$
-  \begin{align*}
-  x^+&=Ax+Bu\\
-  y&=Cx
-  \end{align*}
+  x^+ =Ax+Bu\\
+  y =Cx
   $$
 - 状态变量 $x$ 可以被完全精准测量
 - $(A,B)$系统能控
@@ -27,7 +25,7 @@
 根据上述问题描述，我们可以将这个问题写成一个优化问题的形式：
 $$
 (x_{ref},u_{ref})(y_{ref})\in\begin{cases}
- \argmin\limits_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
+ \text{argmin}_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
  s.t.\ \begin{bmatrix}
  I-A & -B\\
  C   & 0
@@ -113,10 +111,10 @@ $$
 我们将上述观测器与之前的 OTS 问题相结合，OTS 问题可以被重新写为以下格式：
 $$
 (x_{ref},u_{ref})(\hat{d}, y_{ref})\in\begin{cases}
- \argmin\limits_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
- s.t.\ \begin{bmatrix}
- I-A & -B\\
- C   & 0
+\operatorname{argmin}_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
+s.t.\ \begin{bmatrix}
+I-A & -B\\
+C & 0
 \end{bmatrix}\begin{bmatrix}
 x_{ref} \\
 u_{ref}
@@ -229,4 +227,4 @@ $$
 
 [3] Rawlings, J. B., Mayne, D. Q., & Diehl, M. (2017). Model predictive control: Theory, computation, and design.
 
-> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。才疏学浅，如有疏漏，望各位同行斧正。
+> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。才疏学浅，如有纰漏，望各位同行斧正。
