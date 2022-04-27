@@ -4,7 +4,7 @@
 
 > 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。
 
-本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本
+本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。
 
 ## 目录
 

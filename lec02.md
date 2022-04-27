@@ -1,8 +1,6 @@
 #! https://zhuanlan.zhihu.com/p/506347111
 # [MPC] Lec 2  从 LQR 到 MPC
 
-> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。
-
 ## 2.1 引子：凸优化（Convex Optimization）
 
 MPC 的实际上就是循环求解凸优化问题，所以有必要简单铺垫相关知识。一本大家都推荐的参考书应该是 Boyd 的 [《凸优化》](https://web.stanford.edu/~boyd/cvxbook/)。
@@ -190,3 +188,5 @@ $$
 | Finite horizion LQR | No Guarantee| -- | Linear |
 | Infinite horizon LQR | Guarantee | Computational intractable |  Linear |
 | MPC | (linear case) Guarantee | Yes | (non)linear |
+
+> 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。才疏学浅，如有疏漏，望各位同行斧正。
