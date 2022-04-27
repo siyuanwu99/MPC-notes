@@ -351,7 +351,6 @@ $$
 
 即若至少有一个控制输入使得状态保持在 $\mathcal{A}$ 内即称其为控制不变集。
 
-
 若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李雅普诺夫函数（control Lyapunov function）如下，
 
 > 若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
