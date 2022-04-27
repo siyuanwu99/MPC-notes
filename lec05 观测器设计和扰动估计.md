@@ -1,10 +1,10 @@
 # Lec 5 观测器设计和扰动估计
 
-## 1. 轨迹跟踪问题（reference tracking）
+## 5.1 轨迹跟踪问题（reference tracking）
 
 之前几章我们考虑的问题主要是最小化状态变量，即考虑一个不变的吸引子（Attractor）$A\in\mathbb{R}^n$并控制系统使状态变量最终进入吸引子中，然而显然MPC的用途不止于此。实际上我们可以通过事先给定一条轨迹，通过MPC控制系统使状态变量跟上预设的轨迹。
 
-### 1.1 问题描述与假设
+### 5.1.1 问题描述与假设
 
 对于轨迹跟踪问题，我们作出如下假设：
 
@@ -20,7 +20,7 @@
 
 基于上述假设，我们可以将问题描述为：寻找$(\textbf{x}_{ref},\textbf{u}_{ref})\in \mathbb{X}\times\mathbb{U}$ 使得 $C\textbf{x}_{ref}=\textbf{y}_{ref}$，其中$\mathbb{X}$ 和 $\mathbb{U}$表示状态约束和控制约束。
 
-### 1.2 优化目标选择（Optimal target selection）
+### 5.1.2 优化目标选择（Optimal target selection）
 
 根据上述问题描述，我们可以将这个问题写成一个优化问题的形式：
 $$
@@ -53,7 +53,7 @@ $$
     <img width="380" src=figures/lec0501.png />
 </div>
 
-## 2. 全状态反馈下的偏置误差估计(Offset-free MPC with state feedback)
+## 5.2 全状态反馈下的偏置误差估计(Offset-free MPC with state feedback)
 
 上述问题中我们并没有考虑模型的噪声(Noise)和偏置误差(Disturbance)，这一节中我们将学习通过MPC来估计偏置误差并消除其对控制的影响。首先我们对噪声和误差进行定义与建模，其中噪声指期望为0的随机变量，而偏置指一个未知的常数变量。举例来说，噪声可以出现在传感器上，假设我需要测量一个瓜有多重，由于噪声的影响，我有可能得到一个比实际重量偏大的值，也有可能得到偏小的值，但是如果我测量了无限多次，这个误差的期望会是0。而偏置误差则是指我在称上粘了吸铁石，测量重量始终比实际重量大，并且我并不知道吸铁石有多重，通过设计MPC我们就能对吸铁石的重量进行估计。
 
@@ -134,7 +134,7 @@ $$
     <img width="380" src=figures/lec0503.png />
 </div>
 
-## 3. 输出反馈下的偏置误差估计(Offset-free MPC with Output feedback)
+## 5.3 输出反馈下的偏置误差估计(Offset-free MPC with Output feedback)
 
 上一节我们探讨了如何在全状态反馈的情况下估计偏置误差，然而大部分情况下我们都无法准确测量状态变量 $x$ 的值，而只能得到系统输出的值 $y$， 这一节我们将探讨如何在输出反馈的情况下估计偏置误差。这一节中我们将假设状态转移过程中也有噪声和偏置误差，此时系统可以写成如下形式：
 $$
@@ -225,7 +225,7 @@ $$
     <img width="380" src=figures/lec0504.png />
 </div>
 
-## 4.参考
+## 5.4 参考
 
 [1] S. Grammatico, “Lecture 5. model predictive control” 2022
 
