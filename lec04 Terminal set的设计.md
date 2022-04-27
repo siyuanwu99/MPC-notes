@@ -32,7 +32,7 @@ $$
 \forall x \in \mathcal{X_f} \ ,\exists u \in \mathcal{U}\ , x^+=f(x,u)\in \mathcal{X_f}
 $$
 
-对于终端集$\mathcal{X}_f$中任意状态$x$，存在符合输入约束的 $u$ 使它下一步状态$x^+$依然在$\mathcal{X_f}$里。表示当状态$x$进入终端集$\mathcal{X_f}$后，后续状态不会再离开$\mathcal{X_f}$。
+对于终端集$\mathcal{X}_f$中任意状态$x$，**存在**符合输入约束的 $u$ 使它下一步状态$x^+$依然在$\mathcal{X_f}$里。表示当状态$x$进入终端集$\mathcal{X_f}$后，后续状态不会再离开$\mathcal{X_f}$。
 
 * 约束容许性（constraint admissible）
   
@@ -40,7 +40,7 @@ $$
 \forall x \in \mathcal{X_f} \ , x\in \mathcal{X}
 $$
 
-终端集$X_f$中任意状态$x$的符合状态约束集$\mathcal{X}$。状态约束指施加在状态变量上的约束，比如通过在四旋翼无人机系统的横滚角（roll）和俯仰角（pitch）上施加约束，来限制角度，保证系统在线性化模型的平衡点附近工作。
+终端集$X_f$中任意状态$x$的符合**状态约束集**$\mathcal{X}$。状态约束指施加在状态变量上的约束，比如通过在四旋翼无人机系统的横滚角（roll）和俯仰角（pitch）上施加约束，来限制角度，保证系统在线性化模型的平衡点附近工作。
 
 输入$u$也需要符合输入约束。比如四旋翼无人机系统中，限制推力或转矩上的约束。若控制输入$u$为状态变量的函数（状态反馈）, 则也可以写成对状态$x$的约束。
 
@@ -49,7 +49,7 @@ $$
 $$
 下图为一个简单的二维示意图。$\mathcal{X_f}$（红色）中所有状态满足状态约束，即包含于蓝色集合$X$。同时后续状态轨迹保持在$X_f$内。
     <div align=center>
-    <img width="400" height="350" src=figures/Lec0401.png/>
+    <img width="400" height="350" src=figures/Lec0401.png />
     </div>
 
 * 李雅普诺夫递减性 （lyapunov decrease）
@@ -131,7 +131,7 @@ $$
 
 生成$X_f$具体算法如下 [2]：
 <div align=center>
-    <img width="380" height="420" src=figures/Lec0402.png/>
+    <img width="380" height="420" src=figures/Lec0402.png />
     </div>
 
 其中$f_i$表示第$i$个线性约束函数，即$H_ix$。$H$是包含了所有终端线性不等式约束函数的矩阵，它的行数等于约束的个数，列数等于状态变量的个数。终端集$X_f$为线性不等式约束$Hx \leq h$下的集合。可以看出，每个线性不等式约束相当于状态空间中的一个超平面。又由于$X_f$为紧集，最后形成$X_f$的形状是用多个超平面围出来的一个高维度多面体 (Polyhedron)。多面体中的所有点（状态$x$）满足终端集性质。
@@ -191,9 +191,9 @@ $$
 更直观的理解请看下面的二维简化示意图：
 
 <div align=center>
-    <img width="325" height="250" src=figures/Lec0403.png/>
-    <img width="325" height="250" src=figures/Lec0404.png/>
-    <img width="325" height="250" src=figures/Lec0405.png/>
+    <img width="325" height="250" src=figures/Lec0403.png />
+    <img width="325" height="250" src=figures/Lec0404.png />
+    <img width="325" height="250" src=figures/Lec0405.png />
 </div>
 
 最终得到终端集约束：
@@ -234,19 +234,19 @@ $$
 
 最后，约束容许性是通过将 c 设置并调整为一个较小值，从而保证生成的终端集较小，不会超出约束容许集的范围来满足的。一般通过检查椭球的外接多面体的顶点是否在约束容许集的范围内来确定是否满足约束容许性。通过计算 $P$ 的特征值及特征向量得到椭球的半轴 semiaxis 向量，从而得到顶点。当所有顶点都在约束容许集内时，终端集$\mathcal{X}_f$一定满足约束容许性。
 <div align=center>
-    <img width="380" height="270" src=figures/Lec0408.png/>
+    <img width="380" height="270" src=figures/Lec0408.png />
 </div>
 
 注意此方法会使计算出的终端集比实际终端集更小，而实际上我们希望终端集尽可能大。
 
 <div align=center>
-    <img width="300" height="250" src=figures/Lec0406.png/>
+    <img width="300" height="250" src=figures/Lec0406.png />
 </div>
 
 如上图所示，虽然此时水平子集以满足约束容许性，但外接多面体顶点依然处在约束容许集之外。所以需要进一步减小 c 的值。
 
 <div align=center>
-    <img width="300" height="250" src=figures/Lec0407.png/>
+    <img width="300" height="250" src=figures/Lec0407.png />
 </div>
 
 当 c 减小到一定值时，$V_{f}$水平子集的外接多面体顶点都会在约束容许集内，将此时的水平子集作为终端集。
@@ -302,7 +302,7 @@ MPC 不能将任意初始状态在预测步数内控制到进入终端集（比�
 
 下图是一个可达集和终端集的二维截面示例。
 <div align=center>
-    <img width="300" height="250" src=figures/Lec0409.png/>
+    <img width="300" height="250" src=figures/Lec0409.png />
 </div>
 如上图所示，黄色区域代表了终端集，绿色区域代表了可达集，外层深色区域为不可达的状态点。当预测步数 (horizon) 增加时，绿色区域会变大。
 
