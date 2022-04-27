@@ -1,4 +1,4 @@
-# 混合逻辑模型预测控制 (Hybrid Model Predictive Control)
+# Lec 6 混合逻辑模型预测控制 (Hybrid Model Predictive Control)
 
 本节介绍基于混合逻辑系统设计模型预测控制器的方法。
 
@@ -8,7 +8,7 @@ x ^ { + } = \left\{ \begin{array} { c l l }{ 0.8 x + u } & \text { if } &{ x \ge
 $$
 是由两个连续子系统和逻辑变量组成的混合逻辑系统。对于混合逻辑系统的模型预测控制，我们可以将逻辑规则转化为线性整数不等式，在连续变量中加入逻辑变量后，将混合逻辑关系转化为混合整数线性关系，构建模型预测控制问题，并采用混合整数线性规划（MILP）或者混合整数二次规划（MIQP）的方法进行求解。
 
-## MLD系统的转化
+## 6.1 MLD系统的转化
 
 考虑如上系统
 $$
@@ -58,7 +58,7 @@ $$
 \text{where} \left\{ \begin{array}{l} {x = \left[ \begin{array} { l } { x _ { c } } \\ { x _ { d } } \end{array} \right] \in \mathbb{R} ^  { n_ { c } } \times \mathbb{B} ^  { n _{ d } }} \\ {u = \left[ \begin{array} { l } { u _ { c } } \\ { u _ { d } } \end{array} \right] \in \mathbb{R} ^  { m_ { c } } \times \mathbb{B} ^  { m _{ d } }} \\ {y = \left[ \begin{array} { l } { y _ { c } } \\ { y _ { d } } \end{array} \right] \in \mathbb{R} ^  { p_ { c } } \times \mathbb{B} ^  { p _{ d } }} \\ {\delta \in \mathbb{B} ^  { r_ { d } } , z \in \mathbb{R} ^  { r _ { c } }} \end{array} \right.
 $$
 
-## MPC 设计
+## 6.2 MPC 设计
 
 理论上来说，我们可以把混合系统的模型预测控制问题转化后写成如下形式
 

@@ -1,3 +1,4 @@
+#! https://zhuanlan.zhihu.com/p/506342644
 # Lec 1 简介和稳定性理论
 
 本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
@@ -6,28 +7,28 @@
 
 - [Lec 1 简介和稳定性理论](#lec-1-简介和稳定性理论)
   - [目录](#目录)
-  - [Lec 1.1 简介](#lec-11-简介)
-    - [什么是模型预测控制（MPC）？](#什么是模型预测控制mpc)
-    - [基础概念：离散动力系统（Discrete-time dynamical systems）](#基础概念离散动力系统discrete-time-dynamical-systems)
-    - [简介小结](#简介小结)
-  - [Lec 1.2 稳定性理论（Stability Theory）](#lec-12-稳定性理论stability-theory)
-    - [离散非线性系统（Discrete-time nonlinear systems）](#离散非线性系统discrete-time-nonlinear-systems)
-    - [$\mathcal{K}$ 函数](#mathcalk-函数)
-    - [全局渐近稳定性（Global asymptotic stability）](#全局渐近稳定性global-asymptotic-stability)
-    - [GAS 和 $\mathcal{KL}$ 函数](#gas-和-mathcalkl-函数)
-    - [渐进稳定性（Asymptotic stability）](#渐进稳定性asymptotic-stability)
-    - [李雅普诺夫稳定理论（Lyapunov stability theory）](#李雅普诺夫稳定理论lyapunov-stability-theory)
-    - [对于线性系统的李雅普诺夫稳定理论](#对于线性系统的李雅普诺夫稳定理论)
-    - [对于非线性控制系统的李雅普诺夫稳定理论](#对于非线性控制系统的李雅普诺夫稳定理论)
-    - [稳定性理论小结](#稳定性理论小结)
-  - [参考](#参考)
+  - [1.1 简介](#11-简介)
+    - [1.1.1 什么是模型预测控制（MPC）？](#111-什么是模型预测控制mpc)
+    - [1.1.2 基础概念：离散动力系统（Discrete-time dynamical systems）](#112-基础概念离散动力系统discrete-time-dynamical-systems)
+    - [1.1.3 简介小结](#113-简介小结)
+  - [1.2 稳定性理论（Stability Theory）](#12-稳定性理论stability-theory)
+    - [1.2.1 离散非线性系统（Discrete-time nonlinear systems）](#121-离散非线性系统discrete-time-nonlinear-systems)
+    - [1.2.2 $\mathcal{K}$ 函数](#122-mathcalk-函数)
+    - [1.2.3 全局渐近稳定性（Global asymptotic stability）](#123-全局渐近稳定性global-asymptotic-stability)
+    - [1.2.4 GAS 和 $\mathcal{KL}$ 函数](#124-gas-和-mathcalkl-函数)
+    - [1.2.5 渐进稳定性（Asymptotic stability）](#125-渐进稳定性asymptotic-stability)
+    - [1.2.6 李雅普诺夫稳定理论（Lyapunov stability theory）](#126-李雅普诺夫稳定理论lyapunov-stability-theory)
+    - [1.2.7 对于线性系统的李雅普诺夫稳定理论](#127-对于线性系统的李雅普诺夫稳定理论)
+    - [1.2.8 对于非线性控制系统的李雅普诺夫稳定理论](#128-对于非线性控制系统的李雅普诺夫稳定理论)
+    - [1.2.9 稳定性理论小结](#129-稳定性理论小结)
+  - [1.3 参考](#13-参考)
     - [常用的MPC软件工具包](#常用的mpc软件工具包)
 
-## Lec 1.1 简介
+## 1.1 简介
 
 本节给出了MPC的模糊定义和离散动力系统的基本概念。
 
-### 什么是模型预测控制（MPC）？
+### 1.1.1 什么是模型预测控制（MPC）？
 
 ![MPC](figures/Lec0101.png)
 
@@ -51,7 +52,7 @@ MPC在应用上比较重要的一个思想就是滚动时域策略（Receding ho
 
 总的来说，MPC的最主要优点在于其能应对很多不同的约束，并且能保证一定程度的最优性，而且目前已经比较成熟，有充分的应用实例。然而其需要比较精准的控制系统模型，而且需要进行实时运算，在小算力平台上可能导致一些问题。
 
-### 基础概念：离散动力系统（Discrete-time dynamical systems）
+### 1.1.2 基础概念：离散动力系统（Discrete-time dynamical systems）
 
 形如前文中 $x(k+1)=f(x(k),u(k))$ 的表达即代表离散动力系统的状态空间形式（state space form），
 
@@ -137,15 +138,15 @@ $$
 
 其中 $x(0)$ 为当前（测量）状态，$x(k+1)=f(x(k), u(k))$ 为系统动力学，$(x(k), u(k))\in \mathbb{Z}$ 为系统约束，形如 $Fx(k) + Eu(k) \leq e, \forall k \geq 0$。另外，$V_f$为终端代价（terminal cost），$x(N) \in  \mathbb{X}_{\mathrm{f}}$为终端约束，这二者对于之后进行渐进稳定性分析非常重要。
 
-### 简介小结
+### 1.1.3 简介小结
 
 最后总结一下，MPC的应用非常广泛，其最主要的三个组成部分为：预测模型、最优化算法以及滚动时域策略。MPC即为有约束最优控制的实现。
 
-## Lec 1.2 稳定性理论（Stability Theory）
+## 1.2 稳定性理论（Stability Theory）
 
 本节提出了由李雅普诺夫函数（Lyapunov function）和不变集（invariant set）作为主要内容的稳定性理论。参考书推荐Rawlings等的 [14] 和Khalil的 [15]。
 
-### 离散非线性系统（Discrete-time nonlinear systems）
+### 1.2.1 离散非线性系统（Discrete-time nonlinear systems）
 
 离散非线性系统可被表达为，
 
@@ -199,7 +200,7 @@ $$
 
 ![MPC](figures/Lec0105.png)
 
-### $\mathcal{K}$ 函数
+### 1.2.2 $\mathcal{K}$ 函数
 
 另外，我们定义 $\mathcal{K}$ 函数如下，
 
@@ -229,7 +230,7 @@ $$
 >
 > 当 $\gamma(x) = 0 \Longleftrightarrow x = 0$，$\gamma$ 为正定。
 
-### 全局渐近稳定性（Global asymptotic stability）
+### 1.2.3 全局渐近稳定性（Global asymptotic stability）
 
 若有正不变集 $\mathcal{A}$ 且其封闭，全局渐近稳定性（GAS）定义如下，
 
@@ -245,7 +246,7 @@ $$
 
 ![MPC](figures/Lec0106.png)
 
-### GAS 和 $\mathcal{KL}$ 函数
+### 1.2.4 GAS 和 $\mathcal{KL}$ 函数
 
 若有正不变集 $\mathcal{A}$ 且其紧密，且 $f$ 连续时，对于 $\mathcal{A}$ 的 GAS 与如下等价，
 
@@ -255,7 +256,7 @@ $$
 
 这个性质可以理解为，未来可能状态 $x$ 到 $\mathcal{A}$ 的距离由某 $\beta$ 函数（$\mathcal{KL}$ 函数）上限。$\beta$ 函数是状态 $x$ 到 $\mathcal{A}$ 的距离的函数，且随着时间增加而递减。这仍旧意味着 $x$ 到 $\mathcal{A}$ 的距离会收敛到0。
 
-### 渐进稳定性（Asymptotic stability）
+### 1.2.5 渐进稳定性（Asymptotic stability）
 
 由于MPC中有许多约束，我们不太有机会处理GAS，而是分析其非全局渐进稳定性（AS）。类似的，当有正不变集 $\mathcal{X} \subset \mathbb{R}^n$，且有正不变集 $\mathcal{A} \subset \textrm{int}(\mathcal{X})$ 封闭，局部渐进稳定性（locally asymptotically stable）定义为，
 
@@ -281,7 +282,7 @@ $$
 
 即吸引域为所有使得状态 $x$ 渐进稳定于 $\mathcal{A}$ 的初始状态的集合。
 
-### 李雅普诺夫稳定理论（Lyapunov stability theory）
+### 1.2.6 李雅普诺夫稳定理论（Lyapunov stability theory）
 
 我们定义李雅普诺夫函数（Lyapunov function）如下，
 
@@ -304,7 +305,7 @@ V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 
 该定理主要服务于MPC。由于约束存在，$\mathcal{X} \neq \mathbb{R}^n$，故我们需要找到一个李雅普诺夫函数 $V$ 和不变集 $\mathcal{X}$ 来得到渐进稳定性。
 
-### 对于线性系统的李雅普诺夫稳定理论
+### 1.2.7 对于线性系统的李雅普诺夫稳定理论
 
 若有线性系统，
 
@@ -328,7 +329,7 @@ $$
 
 - $\exist P \succ 0, \quad \textrm{subject to} \quad V(x)=x^TPx \, \textrm{is} \, LF$
 
-### 对于非线性控制系统的李雅普诺夫稳定理论
+### 1.2.8 对于非线性控制系统的李雅普诺夫稳定理论
 
 若有非线性控制系统，
 
@@ -367,11 +368,11 @@ $$
 
 李雅普诺夫控制法则所获得的 $\kappa(x)$ 即为当前状态 $x$ 下使得 $x+ \in \mathcal{X}$ 时控制李雅普诺夫函数最小的控制输入。
 
-### 稳定性理论小结
+### 1.2.9 稳定性理论小结
 
 本节定义了许多与李雅普诺夫函数相关的概念，其最终目的就是获得控制李雅普诺夫函数的定义，从而在MPC实际应用时可以分析其渐进稳定性。而当李雅普诺夫函数存在时，就意味着渐近稳定性存在，这是本节最重要的结论。而李雅普诺夫函数的存在则意味着李雅普诺夫函数递减且存在不变集。
 
-## 参考
+## 1.3 参考
 
 [1] Rafal, Steven, “Discrete dynamic optimization applied to on-line optimal control”, AIChE Journal, 1968.
 
