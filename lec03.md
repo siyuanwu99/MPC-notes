@@ -43,7 +43,7 @@ $$
 $$
 我们用 $x^+$ 表示系统位于状态$x$输入最优控制$u_N^0(0;x)$ 后的下一个状态，即最优状态序列 $\boldsymbol{x}_N^0(x)$的第二个状态（$x _ { N } ^ { 0 } ( 0 ; x )$是第一个状态）
 $$
-x^+ = f(x, \kappa(x))=  f(x, u_N^0(0;x)) = u_N^0(1;x)
+x^+ = f(x, \kappa(x))=  f(x, u_N^0(0;x)) = x_N^0(1;x)
 $$
 我们需要推导出，在无约束情形下，如果选取$V_N^0(\cdot)$ 为闭环系统的$x^+ = f(x, \kappa(x))$李雅普诺夫函数，需要满足什么样的条件。
 
@@ -147,10 +147,8 @@ $$
 $$
 \begin{aligned}
 V _{ j + 1 } ^ { 0 } ( x ) - V_ { j } ^ { 0 } ( x ) &
-= \ell ( x , \kappa _{ j + 1 } ( x ) ) + V_ { j } ^ { 0 } ( f ( x , \kappa _ { j + 1 } ( x ) ) )
-- \ell ( x , \kappa _{ j } ( x ) ) - V_ { j - 1 } ^ { 0 } ( f ( x , \kappa _{ j } ( x ) ) ) \quad \forall x \in \mathcal{X}_ { j } \subseteq \mathcal{X} _{ j + 1 } \\
-& \leq \ell ( x , \kappa_ { j } ( x ) ) + V _{ j } ^ { 0 } ( f ( x , \kappa_ { j } ( x ) ) )
-- \ell ( x , \kappa _{ j } ( x ) ) - V_ { j - 1 } ^ { 0 } ( f ( x , \kappa _{ j } ( x ) ) ) \quad \forall x \in \mathcal{X}_ { j }  \\
+= \ell ( x , \kappa _{ j + 1 } ( x ) ) + V_ { j } ^ { 0 } ( f ( x , \kappa _ { j + 1 } ( x ) ) ) - \ell ( x , \kappa _{ j } ( x ) ) - V_ { j - 1 } ^ { 0 } ( f ( x , \kappa _{ j } ( x ) ) ) \quad \forall x \in \mathcal{X}_ { j } \subseteq \mathcal{X} _{ j + 1 } \\
+& \leq \ell ( x , \kappa_ { j } ( x ) ) + V _{ j } ^ { 0 } ( f ( x , \kappa_ { j } ( x ) ) ) - \ell ( x , \kappa _{ j } ( x ) ) - V_ { j - 1 } ^ { 0 } ( f ( x , \kappa _{ j } ( x ) ) ) \quad \forall x \in \mathcal{X}_ { j }  \\
 & =  V _{ j } ^ { 0 } ( f ( x , \kappa_ { j } ( x ) ) ) - V _{ j - 1 } ^ { 0 } ( f ( x , \kappa_ { j } ( x ) ) )
 \end{aligned}
 $$
@@ -209,5 +207,5 @@ $$
 
 参考文献
 
-[1] J. B. Rawlings, D. Q. Mayne, and M. Diehl, “Model predictive control: theory, computation, and design”, 2nd edition. Madison, Wisconsin: Nob Hill Publishing, 2017.
+[1]J. B. Rawlings, D. Q. Mayne, and M. Diehl, Model predictive control: theory, computation, and design, 2nd edition. Madison, Wisconsin: Nob Hill Publishing, 2017.
 [2] F. Blanchini "Set invariance in control", Automatica, 35(11), 1747–1767, 1999 <https://doi.org/10.1016/S0005-1098(99)00113-2>
