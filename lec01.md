@@ -291,7 +291,7 @@ $$
 V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 > 则函数 $V$ 是李雅普诺夫函数。
 
-则有定理，
+可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另有定理， 
 
 > $\exist LF \Longrightarrow GAS$
 
@@ -317,7 +317,7 @@ x^+ &= Ax\\
 \end{equation}
 $$
 
-则以下几种情况等价，
+则以下几种情况等价（注：$A \succ 0$ 代表 $A$ 为正定矩阵），
 
 - 对于 $\big\{ 0 \big\}$ 有GAS
 
