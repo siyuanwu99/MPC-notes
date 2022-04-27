@@ -30,21 +30,17 @@
 
 ### 1.1.1 什么是模型预测控制（MPC）？
 
-![MPC](figures/Lec0101.png)
+<!-- ![MPC](figures/Lec0101.png) -->
 
-模型预测控制主要包括两个部分，第一个部分是预测模型（prediction model），第二个部分是最优化算法（optimization algorithm）。上图中描述了一个使用 MPC 控制的受控体（Plant）。预测模型的主要作用是预测未来可能发生的情况，而最优化算法可以根据其预测来计算出最优控制输入。
+模型预测控制主要包括两个部分，第一个部分是预测模型（prediction model），第二个部分是最优化算法（optimization algorithm）。预测模型的主要作用是预测未来可能发生的情况，而最优化算法可以根据其预测来计算出最优控制输入。
 
-![MPC](figures/Lec0102.png)
+<!-- ![MPC](figures/Lec0102.png) -->
 
-MPC 在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。上图描述了一个离散 MPC 要解决的控制任务，其中我们需要让测量到的输出（measured output）尽可能的贴近参考输出（reference output）。MPC 通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N 即为 Horizon。
+MPC 在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。举个例子，对于一个离散 MPC 要解决的控制任务，我们需要让测量到的输出（measured output）尽可能的贴近参考输出（reference output）。MPC 通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N 即为 Horizon。通过滚动时域这一技巧，最优化问题可以更快的解决。我们将得到的最佳控制输入的第一项作为实际控制输入输入系统之后，系统将会更新。通过不断地重复这一过程，我们可以不断地使得输出更加贴近参考输出，这就是滚动时域的基本思想。
 
-![MPC](figures/Lec0103.png)
+<!-- ![MPC](figures/Lec0103.png) -->
 
-通过滚动时域这一技巧，最优化问题可以更快的解决。我们将得到的最佳控制输入的第一项作为实际控制输入输入系统之后，系统将会更新。
-
-![MPC](figures/Lec0104.png)
-
-通过不断地重复以上过程，我们可以不断地使得输出更加贴近参考输出，这就是滚动时域的基本思想。
+<!-- ![MPC](figures/Lec0104.png) -->
 
 然后让我们简单的谈一谈一些 MPC 的实际应用，例如 GPS 导航应用实时规划最优路径和国际象棋等游戏 AI。GPS 导航应用在获得你当前的位置后会不断地重新规划最优路径，而我们一般也会执行其给出的建议（最优控制输入）。国际象棋 AI（比如说 deterministic，即没有随机性）也不断地根据你当前的落子来得到最优解。
 
@@ -242,9 +238,9 @@ $$
 >
 > $\lim_{k \rarr \infty} |\phi(k;x)|_{\mathcal{A}} = 0, \forall x \in \mathbb{R}^n$
 
-直观上的理解，全局渐近稳定性的第一个性质局部稳定性即为当 $|x|_{\mathcal{A}}$，即 $x$ 到 $\mathcal{A}$ 的距离有上界时，其下 $k$ 个状态距离 $\mathcal{A}$ 有上界。第二个性质意味着对于所有可能的状态，其未来的状态会收敛于 $\mathcal{A}$。同样的意思也可以用下图表述。
+直观上的理解，全局渐近稳定性的第一个性质局部稳定性即为当 $|x|_{\mathcal{A}}$，即 $x$ 到 $\mathcal{A}$ 的距离有上界时，其下 $k$ 个状态距离 $\mathcal{A}$ 有上界。第二个性质意味着对于所有可能的状态，其未来的状态会收敛于 $\mathcal{A}$。
 
-![MPC](figures/Lec0106.png)
+<!-- ![MPC](figures/Lec0106.png) -->
 
 ### 1.2.4 GAS 和 $\mathcal{KL}$ 函数
 
@@ -350,7 +346,6 @@ $$
 > $\mathcal{A} \subset \mathbb{R^n} \quad \textrm{subject to} \quad \forall x \in \mathcal{A}, \exist u \in \mathbb{U} \quad \textrm{subject to} \quad f(x) \in \mathcal{A}$
 
 即若至少有一个控制输入使得状态保持在 $\mathcal{A}$ 内即称其为控制不变集。
-
 
 若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李雅普诺夫函数（control Lyapunov function）如下，
 
