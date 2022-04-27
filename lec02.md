@@ -4,7 +4,7 @@
 
 MPC 的实际上就是循环求解凸优化问题，所以有必要简单铺垫相关知识。一本大家都推荐的参考书应该是 Boyd 的 [《凸优化》](https://web.stanford.edu/~boyd/cvxbook/)。
 
-优化问题标准型如下，其中$u$是决策变量（decision variable），$f(u)$是代价函数（cost function），$g(u)$是不等式约束，$h(u)$是等式约束。所有的约束定义了可行域（feasible set）。简单来说，我们想要找一个$u$，让代价函数最小。若想让这个优化问题是凸优化问题，我们需要代价函数和可行域都是凸的。具体来说，我们需要$f(u) 和 g(u)$是凸函数，$h(u)$是仿射的（affine）。
+优化问题标准型如下，其中 $u$ 是决策变量（decision variable），$f(u)$ 是代价函数（cost function），$g(u)$ 是不等式约束，$h(u)$ 是等式约束。所有的约束定义了可行域（feasible set）。简单来说，我们想要找一个 $u$，让代价函数最小。若想让这个优化问题是凸优化问题，我们需要代价函数和可行域都是凸的。具体来说，我们需要 $f(u) 和 g(u)$ 是凸函数，$h(u)$ 是仿射的（affine）。
 
 $$
 \begin{equation}
@@ -35,7 +35,7 @@ $$
 \end{aligned}
 \end{equation}
 $$
-其中代价函数$V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)$由两部分组成：$\ell(x(k), u(k))$是**阶段代价（stage cost）**，$V_{\mathrm{f}}$是**终端代价（terminal cost）**。我们想让这个优化问题是凸的，所以把这两项都写成二次型的形式，即
+其中代价函数 $V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)$ 由两部分组成：$\ell(x(k), u(k))$ 是 ** 阶段代价（stage cost）**，$V_{\mathrm{f}}$ 是 ** 终端代价（terminal cost）**。我们想让这个优化问题是凸的，所以把这两项都写成二次型的形式，即
 $$
 \begin{equation}
 \begin{aligned}
@@ -45,14 +45,14 @@ $$
 \end{equation}
 $$
 
-$x(k)^\intercal Q x(k)$ 意味着尽量缩小状态误差，$u(k)^\intercal R u(k)$则意味着在接近目标状态的同时要尽量减小输入量的值。在这里，我们需要$Q, P\succeq0$ 半正定 且 $R\succ0$ 正定来保证代价函数是凸的二次型。
+$x(k)^\intercal Q x(k)$ 意味着尽量缩小状态误差，$u(k)^\intercal R u(k)$ 则意味着在接近目标状态的同时要尽量减小输入量的值。在这里，我们需要 $Q, P\succeq0$ 半正定 且 $R\succ0$ 正定来保证代价函数是凸的二次型。
 
-上边这个优化问题是多阶段（multistage）优化问题，可以通过动态规划（dynamic programming）的方法求得最优输入的闭式解。**推导如下：**
+上边这个优化问题是多阶段（multistage）优化问题，可以通过动态规划（dynamic programming）的方法求得最优输入的闭式解。** 推导如下：**
 
 <!-- 在教材 [Model Predictive Control:
 Theory, Computation, and Design 2nd Edition ](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-3rd-printing.pdf) 的 18 到 20 页有详细的推导。最后我们可以得到： -->
 
-$N-1$的阶段代价和终端代价可以写为：
+$N-1$ 的阶段代价和终端代价可以写为：
 $$
 \begin{aligned}
 &\ell(x(N-1), u(N-1))+V_f(x(N)) \\
@@ -90,7 +90,7 @@ K(N-1) &=-\left(B^{\intercal} P B+R\right)^{-1} B^{\intercal} P A\\
 \end{aligned}
 \end{equation}
 $$
-在优化$V_{N-1}$之后，我们优化下一个子问题，即：
+在优化 $V_{N-1}$ 之后，我们优化下一个子问题，即：
 
 $$
 \begin{equation}
@@ -131,11 +131,11 @@ $$
 $$
 V_{k}^{0}(x)=(1 / 2) x^{\intercal} \Pi(k) x \quad k=N, N-1, \ldots, 0
 $$
-这个最优值函数很有意思，它代表了从第$k$个阶段代价以后的所有代价函数的最优值。
+这个最优值函数很有意思，它代表了从第 $k$ 个阶段代价以后的所有代价函数的最优值。
 
 ### 2.2.2 无限阶段 （infinite horizon）的 LQR
 
-当预测步长 (time horizon) 从$N$不断增大，直到无穷的时候，finite horizon LQR 就延伸成了 infinite horizion LQR，优化问题如下：
+当预测步长 (time horizon) 从 $N$ 不断增大，直到无穷的时候，finite horizon LQR 就延伸成了 infinite horizion LQR，优化问题如下：
 $$
 \begin{equation}
 \begin{aligned}
