@@ -1,3 +1,4 @@
+#! https://zhuanlan.zhihu.com/p/506347060
 # Lec 4 MPC 终端集（Terminal set）的设计
 
 ## 4.1 简介
@@ -51,6 +52,7 @@ $$
     <div align=center>
     <img width="400" height="350" src=figures/Lec0401.png />
     </div>
+
 
 * 李雅普诺夫递减性 （lyapunov decrease）
   

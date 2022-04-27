@@ -1,3 +1,4 @@
+#! https://zhuanlan.zhihu.com/p/506347111
 # Lec 2  从 LQR 到 MPC
 
 ## 2.1 引子：凸优化（Convex Optimization）
@@ -35,7 +36,7 @@ $$
 \end{aligned}
 \end{equation}
 $$
-其中代价函数 $V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)$ 由两部分组成：$\ell(x(k), u(k))$ 是 ** 阶段代价（stage cost）**，$V_{\mathrm{f}}$ 是 ** 终端代价（terminal cost）**。我们想让这个优化问题是凸的，所以把这两项都写成二次型的形式，即
+其中代价函数 $V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)$ 由两部分组成：$\ell(x(k), u(k))$ 是 **阶段代价（stage cost）**，$V_{\mathrm{f}}$ 是 **终端代价（terminal cost）**。我们想让这个优化问题是凸的，所以把这两项都写成二次型的形式，即
 $$
 \begin{equation}
 \begin{aligned}
@@ -47,7 +48,7 @@ $$
 
 $x(k)^\intercal Q x(k)$ 意味着尽量缩小状态误差，$u(k)^\intercal R u(k)$ 则意味着在接近目标状态的同时要尽量减小输入量的值。在这里，我们需要 $Q, P\succeq0$ 半正定 且 $R\succ0$ 正定来保证代价函数是凸的二次型。
 
-上边这个优化问题是多阶段（multistage）优化问题，可以通过动态规划（dynamic programming）的方法求得最优输入的闭式解。** 推导如下：**
+上边这个优化问题是多阶段（multistage）优化问题，可以通过动态规划（dynamic programming）的方法求得最优输入的闭式解。**推导如下：**
 
 <!-- 在教材 [Model Predictive Control:
 Theory, Computation, and Design 2nd Edition ](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-3rd-printing.pdf) 的 18 到 20 页有详细的推导。最后我们可以得到： -->
