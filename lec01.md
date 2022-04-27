@@ -287,7 +287,7 @@ $$
 V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 > 则函数 $V$ 是李雅普诺夫函数。
 
-可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另外，我们一般把 $\mathcal{A}$ 称作目标集（desired set），而满足其后的渐进性稳定，则可称作为吸引子（attractor set）另有定理，
+可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另外，我们一般把 $\mathcal{A}$ 称作目标集（desired set），而满足其后的渐进性稳定，则可称作为吸引子（attractor set）。另有定理，
 
 > $\exist LF \Longrightarrow GAS$
 
