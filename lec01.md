@@ -1,3 +1,4 @@
+#! https://zhuanlan.zhihu.com/p/506342644
 # Lec 1 简介和稳定性理论
 
 本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
