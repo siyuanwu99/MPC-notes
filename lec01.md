@@ -174,7 +174,7 @@ x^+ &= \begin{bmatrix}
 \end{equation}
 $$
 
-其一个可能的正不变集可以是一个被如下顶点定义的多边形，
+其一个可能的正不变集可以是一个被如下顶点定义的多面体（Polyhedron），
 
 $$
 \begin{equation}
