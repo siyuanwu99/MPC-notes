@@ -189,4 +189,9 @@ $$
 | Infinite horizon LQR | Guarantee | Computational intractable |  Linear |
 | MPC | (linear case) Guarantee | Yes | (non)linear |
 
+
+参考文献
+
+[Model Predictive Control: Theory, Computation, and Design 2nd Edition ](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-3rd-printing.pdf) 的 18 到 20 页
+
 > 本系列主要基于荷兰代尔夫特理工大学机械、海事、材料学院（3mE）代尔夫特系统控制中心（Delft Center for Systems and Control），Sergio Grammatico 教授开设的模型预测控制（Model Predictive Control or MPC）硕士课程，由[@人民叫失](https://www.zhihu.com/people/liu-xian-zhong-22-7) [@SailorBrandon](https://www.zhihu.com/people/han-shao-hang-68) [@Rambled](https://www.zhihu.com/people/rambled) [@Smoggy](https://www.zhihu.com/people/smoggy-28) 和 [@苏飞飞](https://www.zhihu.com/people/eee-28-90) 共同整理完成。才疏学浅，如有疏漏，望各位同行斧正。
