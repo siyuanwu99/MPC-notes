@@ -1,7 +1,7 @@
-#! https://zhuanlan.zhihu.com/p/506342644
 # Lec 1 简介和稳定性理论
 
 本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico 教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
+<https://zhuanlan.zhihu.com/p/506342644>
 
 ## 目录
 
@@ -291,7 +291,7 @@ $$
 V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 > 则函数 $V$ 是李雅普诺夫函数。
 
-可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另有定理， 
+可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另有定理，
 
 > $\exist LF \Longrightarrow GAS$
 
@@ -351,11 +351,8 @@ $$
 
 即若至少有一个控制输入使得状态保持在 $\mathcal{A}$ 内即称其为控制不变集。
 
-<<<<<<< HEAD
-若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\smathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李亚普诺夫函数（control lyapunov function）如下，
-=======
-若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李雅普诺夫函数（control lyapunov function）如下，
->>>>>>> 3c56ec5d3d72ede9786e2747cb941455054205cc
+
+若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李雅普诺夫函数（control Lyapunov function）如下，
 
 > 若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
 > $$ \alpha_1 (|x|_{\mathcal{A}}) \leq V(x) \leq \alpha_2 (|x|_{\mathcal{A}}) \\
@@ -368,7 +365,7 @@ $$
 
 定义李雅普诺夫控制法则为，
 
-> $\kappa(x) := \argmin_{v \in \mathbb{U}} \big\{ V(f(x,v)) \, | \, f(x,v) \in \mathcal{X} \big\}$
+> $\kappa(x) := \textrm{argmin}_{v \in \mathbb{U}} \big\{ V(f(x,v)) \, | \, f(x,v) \in \mathcal{X} \big\}$
 
 李雅普诺夫控制法则所获得的 $\kappa(x)$ 即为当前状态 $x$ 下使得 $x+ \in \mathcal{X}$ 时控制李雅普诺夫函数最小的控制输入。
 
