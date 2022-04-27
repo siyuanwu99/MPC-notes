@@ -188,3 +188,9 @@ $$
 | Finite horizion LQR | No Guarantee| -- | Linear |
 | Infinite horizon LQR | Guarantee | Computational intractable |  Linear |
 | MPC | (linear case) Guarantee | Yes | (non)linear |
+
+
+参考文献
+
+[Model Predictive Control:
+Theory, Computation, and Design 2nd Edition ](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-3rd-printing.pdf) 的 18 到 20 页
