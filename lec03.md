@@ -184,9 +184,9 @@ $$
 (4)\quad & 0 \in \operatorname { int } ( X_ { f } ) , \quad V _{ f } ( x ) \leq \alpha_ { 2 } ( | x | ) , \quad \forall x \in \mathbb{X} _{ f }
 \end{aligned}{}
 $$
-，由此推出 MPC 稳定渐进，且吸引域为$\mathcal{X}_N$ 。
+由此推出 MPC 稳定渐进，且吸引域为$\mathcal{X}_N$ 。
 
-> 写了这么多，用人话来说很简单：证明 MPC 稳定性的时候，只需要关心 terminal cost $V_f$ 是不是李雅普诺夫函数，以及 stage cost $\ell(x, u)$ 是否正定
+> 写了这么多，用人话来说很简单：证明 MPC 稳定性的时候，需要检查 terminal cost $V_f$ 是不是李雅普诺夫函数，以及 stage cost $\ell(x, u)$ 是否正定。保证稳定性的具体设计方法以及其他性质的证明，请参照下一章。
 
 ---
 
