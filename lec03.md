@@ -23,7 +23,7 @@ V(f(x)) - V(x) \leq - \alpha_3(|x|) $$
 在如上定义中提到了正不变集的概念，正不变集的定义如下：
 > 如果任意状态 $x \in \mathbb{X}$ 满足 $x^+ = f(x) \in \mathbb{X}$ ，则集合$\mathbb{X}$是正不变集。
 
-通常为了证明系统稳定性，需要证明无限时间最优控制问题 (infinite horizon optimal control) 的代价函数 (cost function)  为李雅普诺夫函数。在 MPC 问题中，通常选取有限时间最优控制问题的代价函数$V_N^0(\cdot)$，证明其满足李雅普诺夫函数的定义，即证明了 MPC 系统的稳定性。下面我们推导无状态约束 (state constraints) 下的 MPC 稳定性的相关结论。
+通常为了证明系统稳定性，需要证明无限时间阶段最优控制问题 (infinite horizon optimal control) 的代价函数 (cost function)  为李雅普诺夫函数。在 MPC 问题中，通常选取有限时间最优控制问题的代价函数$V_N^0(\cdot)$，证明其满足李雅普诺夫函数的定义，即证明了 MPC 系统的稳定性。下面我们推导无状态约束 (state constraints) 下的 MPC 稳定性的相关结论。
 
 ## 3.2 无约束下的稳定性
 
@@ -31,11 +31,11 @@ V(f(x)) - V(x) \leq - \alpha_3(|x|) $$
 
 在无约束问题中，状态空间为整个 $\mathbb{R}^n$ 空间，即 $\mathbb{X} = \mathbb{R}^n$ 。为了保证在状态空间上的稳定性，要求$k$ 步内能控状态的集合 $\mathcal{X}_k = \mathbb{R}^n$ ，这样系统能够保证在状态空间中任意状态初始化时均能控制到终端约束集合 ( terminal set ) 中。
 
-我们可以使用如下符号表示状态在$x$时步长为 N 的最优控制序列为
+我们可以使用如下符号表示状态在$x$时步数为 N 的最优控制序列为
 $$
 \boldsymbol{u}_N^0(x) = (~u_N^0(0;x), ~ u_N^0(1; x),  ~\cdots , ~u_N^0 (N-1; x))
 $$
-其中$\boldsymbol{u}$ 加粗，代表它是一个序列，下标 $N$ 代表预测步长，上标$0$ 代表该序列为最优控制序列，$u_N^0(k; x)$ 代表最优控制序列的第 $k$ 步输入。
+其中$\boldsymbol{u}$ 加粗，代表它是一个序列，下标 $N$ 代表预测步数，上标$0$ 代表该序列为最优控制序列，$u_N^0(k; x)$ 代表最优控制序列的第 $k$ 步输入。
 
 我们用如下符号表示最优控制下的状态序列 $\boldsymbol{x}_N^0(x)$
 $$
@@ -121,14 +121,14 @@ $$
 $$
 V _{ N } ^ { 0 } ( f ( x , \kappa_ { N } ( x ) ) ) \leq V _{ N } ^ { 0 } ( x ) - \ell ( x , \kappa_ { N } ( x ) ), \quad \forall x \in \mathcal{X}_N
 $$
-其中$\mathcal{X}_N$是步长为 N 时系统有稳定性保证的初始状态的集合。
+其中$\mathcal{X}_N$是步数为 N 时系统有稳定性保证的初始状态的集合。
 
 **最优代价函数递减**有两种方法证明。一种是类似上节证明无约束代价函数李雅普诺夫递减，构造偏移控制序列，借助控制不变集$\mathbb{X}_f$中存在局部的控制李雅普诺夫函数的假设进行证明。通过这个引理进行证明，需要假定存在最优控制，即$u\in \mathbb{U}$ 的集合$\mathbb{U}$为紧集。这个要求太强了，存在取不到只能趋近最优控制$u^*$ 的情况。另外一种证明方法是先证明最优代价函数单调 (monotonicity of optimal value function)，即
 $$
 V_ { k + 1 } ^ { 0 } ( x ) \leq V _{ k } ^ { 0 } ( x ) , \quad \forall x \in X_ { k } , \forall k \in \{ 0 , \ldots , N - 1 \} \\
 V _{ N } ^ { 0 } ( x ) \leq V_ { f } ( x ) , \quad \forall x \in \mathbb{X} _ { f }
 $$
-最后得到最优代价函数递减。证明**最优代价函数单调**从 terminal cost $V_f$ 出发，从 0 开始一步步增加步长，并外推出步长为 N 时的代价函数。
+最后得到最优代价函数递减。证明**最优代价函数单调**从 terminal cost $V_f$ 出发，从 0 开始一步步增加步数，并外推出步数为 N 时的代价函数。
 
 下面简单给出证明最优代价函数单调的思路。
 
@@ -138,11 +138,11 @@ $$
 $$
 V _{ 1 } ^ { 0 } ( x ) = \min_ { u \in \mathbb{U}} \{ \ell ( x , u ) + V _{ 0 } ^ { 0 } ( f ( x , u ) ) | f ( x , u ) \in \mathcal{X}_ { 0 } \}
 $$
-其中$V_0^0(\cdot)$即步长为 0 时的最优代价函数，即 terminal cost $V_f$ ；$\mathcal{X}_0$即步长为 0 时的有稳定性保证的集合，即 terminal set $\mathbb{X}_f$ ，代入上式并利用$V_f$是控制李雅普诺夫函数的假设有
+其中$V_0^0(\cdot)$即步数为 0 时的最优代价函数，即 terminal cost $V_f$ ；$\mathcal{X}_0$即步数为 0 时的有稳定性保证的集合，即 terminal set $\mathbb{X}_f$ ，代入上式并利用$V_f$是控制李雅普诺夫函数的假设有
 $$
 V _{ 1 } ^ { 0 } ( x ) = \min_ { u \in \mathbb{U}} \{ \ell ( x , u ) + V _f( f ( x , u ) ) | f ( x , u ) \in \mathbb{X}_f \} \leq V_f(x)
 $$
-再对步长为$j$推导，利用$j+1$ 步时$\kappa_{j+1}(x)$ 比 $\kappa_{j}(x)$ 更优（因为预测步长更长了）
+再对步长为$j$推导，利用$j+1$ 步时$\kappa_{j+1}(x)$ 比 $\kappa_{j}(x)$ 更优（因为预测步数更长了）
 
 $$
 \begin{aligned}
