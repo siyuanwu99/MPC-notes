@@ -44,6 +44,8 @@ $$
 
 关于如何将逻辑关系$[ \delta = 1 ] \Leftrightarrow [ f ( x ) \geq c ]$ 转换为等价的混合整数线性不等式，这里给出一个转换表格
 
+![逻辑关系转换到MIL不等式](figures/Lec0602.png)
+
 | 逻辑关系                                                     | 混合整数线性不等式 (MIL inequalities)                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | $[ \delta = 1 ] \Leftrightarrow [ f ( x ) \geq c ]$          | $\left\{ \begin{array} { l } { ( c - m ) \delta \leq f ( x ) - m } \\ { ( M - c + \epsilon ) \delta \geq f ( x ) - c + \epsilon } \end{array} \right.$ |
@@ -86,7 +88,7 @@ $$
 
 则以上问题可以整理成如下形式的成 MIQP 问题
 $$
-\mathbb{P} _ { N } ( x _ { 0 } ) : \left\{ \begin{array} { l l } { \operatorname { min } _ { \xi _ { N } } } & { \frac { 1 } { 2 } \xi _ { N } ^ { T } H \xi _ { N } + x _ { 0 } ^ { T } F \xi _ { N } } \\ { \text { s.t. } } & { G \xi _ { N } \leq W + S x _ { 0 } } \end{array} \right.
+\mathbb{P} _ { N } ( x _ { 0 } ) : \left\{ \begin{array} { l l } { \min _ { \xi _ { N } } } & { \frac { 1 } { 2 } \xi _ { N } ^ { T } H \xi _ { N } + x _ { 0 } ^ { T } F \xi _ { N } } \\ { \text { s.t. } } & { G \xi _ { N } \leq W + S x _ { 0 } } \end{array} \right.
 $$
 
 
@@ -107,3 +109,61 @@ $$
 
 则 $\{x_{\text{ref}}\}$ 闭环系统渐进稳定
 
+## 6.3 工程应用
+
+实际工程中的大部分问题都可以建模成混合系统进行求解。例如，下面多车道车速安全控制问题即可使用混合系统的MPC求解。
+
+![车道控制](figures/Lec0603.png)
+
+图中的红车是受控对象。我们可以控制的有车速和车道。车速是连续变量。车道是离散的变量，取值范围是 $\mathbb{L} = \{ 1 , \ldots , L \}$ ，其中 $L$ 是车道总数。红车每次只能向相邻车道变道。该问题可以建模成如下MPC问题
+
+$$
+\left\{ \begin{array} { l l } { \min _ { v , z } } & { V _ { N } ( v , z ) } \\ { \text { s.t. } } & { 0 \leq v ( k ) \leq \overline { v } , \forall k \in T } \\ { } & { \max \{ 1 , z ( k ) - 1 \} \leq z _ { i } ( k + 1 ) \leq \min \{ L , z ( k ) + 1 \} , \forall k \in T } \end{array} \right.
+$$
+
+其中 $T : = \{ 0,1 , \ldots , N \}$ 是预测步长的集合。
+
+为了保证红车能够在车道上安全行驶，定义红车与第 $j$ 个小车的纵向距离和侧向距离分别为
+$$
+d _ { j } ( k + 1 ) = d _ { j } ( k ) + \tau ( v _ { j } ( k ) - v ( k ) ) , \quad \forall j , \forall k \in T \\
+\Delta z _ { j } ( k ) = z _ { j } ( k ) - z ( k ) \in \{ \underbrace { - L + 1 } _ { m _ { \Delta } } , \underbrace { L - 1 } _ { M _ { \Delta } } \} , \quad \forall j , \forall k \in T
+$$
+安全性条件为：若红车与其它车在同一车道，则两车之间距离要大于安全距离 $ \overline { d }$。该条件用逻辑关系表示为
+$$
+\underbrace { [ \Delta z _ { j } ( k ) = 0 ] } _ { (A) } \Rightarrow \underbrace { [ d _ { j } ( k ) \geq \overline { d } ] } _ { (B) } \quad \forall j , \forall k \in T
+$$
+由于逻辑关系(A)中的变量 $\Delta z _ { j } ( k )$ 不是布尔变量，我们需要把这个逻辑关系用布尔变量表示，这里可以定义辅助变量 $\alpha_j$ 
+$$
+\underbrace { [ \alpha _ { j } ( k ) = 1 ] } _ { (A _ { 3 }) } \Leftrightarrow \underbrace { [ \Delta z _ { j } ( k ) \leq 0 ] } _ { (A _ { 1 }) } \wedge \underbrace { [ \Delta z _ { j } ( k ) \geq 0 ] } _ {( A _ { 2 }) }
+$$
+将如上关系按照 6.1 节中方法将上面三项分别转化为混合整数不等式为
+$$
+(A _ { 1 }) : \left\{ \begin{array} { l } { M _ { \Delta } \theta _ { j } ( k ) \leq M _ { \Delta } - \Delta z _ { j } ( k ) } \\ { ( \epsilon - m _ { \Delta } ) \theta _ { j } ( k ) \geq \epsilon - \Delta z _ { j } ( k ) } \end{array} \right. \\
+(A _ { 2 }) : \left\{ \begin{array} { l } { - m _ { \Delta } \kappa _ { j } ( k ) \leq \Delta z _ { j } ( k ) - m _ { \Delta } } \\ { ( M _ { \Delta } + \epsilon ) \kappa _ { j } ( k ) \geq \epsilon + \Delta z _ { j } ( k ) } \end{array} \right. \\
+(A _ { 3 }) : \left\{ \begin{array} { l } { - \theta _ { j } ( k ) + \alpha _ { j } ( k ) \leq 0 } \\ { - \kappa _ { j } ( k ) + \alpha _ { j } ( k ) \leq 0 } \\ { \theta _ { j } ( k ) + \kappa _ { j } ( k ) - \alpha _ { j } ( k ) \leq 1 } \end{array} \right.
+$$
+
+加入辅助布尔变量 $\alpha_j$ 后安全性条件可以改写为
+$$
+\alpha _ { j } ( k ) ( - d _ { j } ( k ) + \overline { d } ) \leq 0
+$$
+这时我们发现这个不等式是一个非线性约束，我们可以定义新的辅助实变量 $f _ { j } = \alpha _ { j } d _ { j } \in \mathbb{R}$ ，它需要满足如下条件
+$$
+(B): \left\{ \begin{array} { l } { d _ { \min } \alpha _ { j } \leq f _ { j } \leq d _ { \max } \alpha _ { j } } \\ { - d _ { \max } ( 1 - \alpha _ { j } ) \leq f _ { j } - d _ { j } \leq - d _ { \min } ( 1 - \alpha _ { j } ) } \end{array} \right.
+$$
+最后改写安全性条件为
+$$
+\alpha _ { j } ( k ) \overline { d } - f _ { j } ( k ) \leq 0
+$$
+
+综合以上混合整数线性约束，我们得到如下MPC问题
+$$
+\left\{ \begin{array} { c l } { \min _ { v , z , \alpha , f , \theta , \kappa } } & { V _ { N } ( v , z ) } \\ { \text { s.t. } } & { 0 \leq v ( k ) \leq \overline { v } , \quad \forall k \in T } \\ { } & { z ( k + 1 ) \leq \min \{ L , z ( k ) + 1 \} , \quad\forall k \in T } \\ { } & { - z ( k + 1 ) \leq - \max \{ 1 , z ( k ) - 1 \} ,\quad  \forall k \in T } \\ 
+{ } & { (A _ { 1 }), \quad \forall j , \forall k \in T } \\
+{ } & { (A _ { 2 }), \quad \forall j , \forall k \in T } \\ 
+{ } & {  (A _ { 3 }), \quad \forall j , \forall k \in T } \\ 
+{ } & {  (B ) , \quad \forall j , \forall k \in T } \\ 
+{ } & { - f _ { j } ( k ) + \alpha _ { j } ( k ) \overline { d } \leq 0 , \quad \forall j , \forall k \in T } \end{array} \right.
+$$
+
+求解该 MPC 即可实现红车的车道车速安全控制。
