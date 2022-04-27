@@ -195,7 +195,7 @@ $$
 \end{equation}
 $$
 
-如下图所示，该集合中所有点均满足 $x^+$ 也属于该集合，即该集合为此函数的正不变集。蓝线表达了若 $x$ 为顶点 $x^+$ 的变化趋势。
+如下图所示，该集合中所有点均满足 $x^+$ 也属于该集合，即该集合为此函数的正不变集。想证明这个多边形是正不变集，我们可以计算所有顶点所对应的 $x^+$（蓝线表达了顶点对应的 $x^+$ 的变化趋势），然后它们都在原来的集合里边。我们注意到这是一个凸多边形，也就是说里边所有的点都是顶点的凸组合（convex combination），那么就可以推出这些点所对应的 $x^+$ 也都在原来的集合里边（大家可以根据convex combination的定义自己写一下）。那么系统向后推一步之后得到的所有的 $x^+$ 是一个不变集。注意到新集合的顶点也属于原来集合，所以可以推出之后集合的点都是属于初始的不变集里边的。
 
 ![MPC](figures/Lec0105.png)
 
@@ -350,7 +350,7 @@ $$
 
 即若至少有一个控制输入使得状态保持在 $\mathcal{A}$ 内即称其为控制不变集。
 
-若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李亚普诺夫函数（control lyapunov function）如下，
+若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\smathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李亚普诺夫函数（control lyapunov function）如下，
 
 > 若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
 > $$ \alpha_1 (|x|_{\mathcal{A}}) \leq V(x) \leq \alpha_2 (|x|_{\mathcal{A}}) \\
