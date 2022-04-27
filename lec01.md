@@ -1,7 +1,7 @@
 #! https://zhuanlan.zhihu.com/p/506342644
 # Lec 1 简介和稳定性理论
 
-本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
+本章首先简要的介绍一下本文的主要内容以及一些基本概念，随后提出稳定性理论。本系列主要参考了荷兰代尔夫特理工大学，3mE，Delft Center for Systems and Control，Sergio Grammatico 教授开设的硕士课程，模型预测控制（Model Predictive Control or MPC）。
 
 ## 目录
 
@@ -22,21 +22,21 @@
     - [1.2.8 对于非线性控制系统的李雅普诺夫稳定理论](#128-对于非线性控制系统的李雅普诺夫稳定理论)
     - [1.2.9 稳定性理论小结](#129-稳定性理论小结)
   - [1.3 参考](#13-参考)
-    - [常用的MPC软件工具包](#常用的mpc软件工具包)
+    - [常用的 MPC 软件工具包](#常用的-mpc-软件工具包)
 
 ## 1.1 简介
 
-本节给出了MPC的模糊定义和离散动力系统的基本概念。
+本节给出了 MPC 的模糊定义和离散动力系统的基本概念。
 
 ### 1.1.1 什么是模型预测控制（MPC）？
 
 ![MPC](figures/Lec0101.png)
 
-模型预测控制主要包括两个部分，第一个部分是预测模型（prediction model），第二个部分是最优化算法（optimization algorithm）。上图中描述了一个使用MPC控制的受控体（Plant）。预测模型的主要作用是预测未来可能发生的情况，而最优化算法可以根据其预测来计算出最优控制输入。
+模型预测控制主要包括两个部分，第一个部分是预测模型（prediction model），第二个部分是最优化算法（optimization algorithm）。上图中描述了一个使用 MPC 控制的受控体（Plant）。预测模型的主要作用是预测未来可能发生的情况，而最优化算法可以根据其预测来计算出最优控制输入。
 
 ![MPC](figures/Lec0102.png)
 
-MPC在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。上图描述了一个离散MPC要解决的控制任务，其中我们需要让测量到的输出（measured output）尽可能的贴近参考输出（reference output）。MPC通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N即为Horizon。
+MPC 在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。上图描述了一个离散 MPC 要解决的控制任务，其中我们需要让测量到的输出（measured output）尽可能的贴近参考输出（reference output）。MPC 通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N 即为 Horizon。
 
 ![MPC](figures/Lec0103.png)
 
@@ -46,11 +46,11 @@ MPC在应用上比较重要的一个思想就是滚动时域策略（Receding ho
 
 通过不断地重复以上过程，我们可以不断地使得输出更加贴近参考输出，这就是滚动时域的基本思想。
 
-然后让我们简单的谈一谈一些MPC的实际应用，例如GPS导航应用实时规划最优路径和国际象棋等游戏AI。GPS导航应用在获得你当前的位置后会不断地重新规划最优路径，而我们一般也会执行其给出的建议（最优控制输入）。国际象棋AI（比如说deterministic，即没有随机性）也不断地根据你当前的落子来得到最优解。
+然后让我们简单的谈一谈一些 MPC 的实际应用，例如 GPS 导航应用实时规划最优路径和国际象棋等游戏 AI。GPS 导航应用在获得你当前的位置后会不断地重新规划最优路径，而我们一般也会执行其给出的建议（最优控制输入）。国际象棋 AI（比如说 deterministic，即没有随机性）也不断地根据你当前的落子来得到最优解。
 
-工业上的应用则更为广泛，比如最早应用MPC的过程控制 [1]，[2]当时已经可以满足实时性需求；航空航天 [3]， [4] 上通过MPC对能源使用进行优化，实时性已经可以达到秒级；自动驾驶方面也有很多高实时性（0.1s）的应用 [5] - [8]；其他还包括自来水供水 [9]，建筑基于天气情况的安排 [10]，[11]，电网[12]，[13]等。
+工业上的应用则更为广泛，比如最早应用 MPC 的过程控制 [1]，[2] 当时已经可以满足实时性需求；航空航天 [3]， [4] 上通过 MPC 对能源使用进行优化，实时性已经可以达到秒级；自动驾驶方面也有很多高实时性（0.1s）的应用 [5] - [8]；其他还包括自来水供水 [9]，建筑基于天气情况的安排 [10]，[11]，电网 [12]，[13] 等。
 
-总的来说，MPC的最主要优点在于其能应对很多不同的约束，并且能保证一定程度的最优性，而且目前已经比较成熟，有充分的应用实例。然而其需要比较精准的控制系统模型，而且需要进行实时运算，在小算力平台上可能导致一些问题。
+总的来说，MPC 的最主要优点在于其能应对很多不同的约束，并且能保证一定程度的最优性，而且目前已经比较成熟，有充分的应用实例。然而其需要比较精准的控制系统模型，而且需要进行实时运算，在小算力平台上可能导致一些问题。
 
 ### 1.1.2 基础概念：离散动力系统（Discrete-time dynamical systems）
 
@@ -107,7 +107,7 @@ x(k) &= A^kx_0 + \sum^{k-1}_{j=0}A^{k-j-1}Bu(j)\\
 \end{equation}
 $$
 
-其中 $C_k$ 为k步内控制性矩阵（controllability matrix），$\bm{u}_k$即为上文中的输入控制序列
+其中 $C_k$ 为 k 步内控制性矩阵（controllability matrix），$\bm{u}_k$即为上文中的输入控制序列
 
 $$
 \begin{equation}
@@ -123,7 +123,7 @@ u(0)
 \end{equation}
 $$
 
-结合以上，MPC可以如下表达，
+结合以上，MPC 可以如下表达，
 
 $$
 \begin{equation}
@@ -140,11 +140,11 @@ $$
 
 ### 1.1.3 简介小结
 
-最后总结一下，MPC的应用非常广泛，其最主要的三个组成部分为：预测模型、最优化算法以及滚动时域策略。MPC即为有约束最优控制的实现。
+最后总结一下，MPC 的应用非常广泛，其最主要的三个组成部分为：预测模型、最优化算法以及滚动时域策略。MPC 即为有约束最优控制的实现。
 
 ## 1.2 稳定性理论（Stability Theory）
 
-本节提出了由李雅普诺夫函数（Lyapunov function）和不变集（invariant set）作为主要内容的稳定性理论。参考书推荐Rawlings等的 [14] 和Khalil的 [15]。
+本节提出了由李雅普诺夫函数（Lyapunov function）和不变集（invariant set）作为主要内容的稳定性理论。参考书推荐 Rawlings 等的 [14] 和 Khalil 的 [15]。
 
 ### 1.2.1 离散非线性系统（Discrete-time nonlinear systems）
 
@@ -254,11 +254,11 @@ $$
 >
 > $|\phi(k;x)|_{\mathcal{A}} \leq \beta(|x|_{\mathcal{A}}, k), \forall k \in \mathbb{N}, x \in \mathbb{R}^n$
 
-这个性质可以理解为，未来可能状态 $x$ 到 $\mathcal{A}$ 的距离由某 $\beta$ 函数（$\mathcal{KL}$ 函数）上限。$\beta$ 函数是状态 $x$ 到 $\mathcal{A}$ 的距离的函数，且随着时间增加而递减。这仍旧意味着 $x$ 到 $\mathcal{A}$ 的距离会收敛到0。
+这个性质可以理解为，未来可能状态 $x$ 到 $\mathcal{A}$ 的距离由某 $\beta$ 函数（$\mathcal{KL}$ 函数）上限。$\beta$ 函数是状态 $x$ 到 $\mathcal{A}$ 的距离的函数，且随着时间增加而递减。这仍旧意味着 $x$ 到 $\mathcal{A}$ 的距离会收敛到 0。
 
 ### 1.2.5 渐进稳定性（Asymptotic stability）
 
-由于MPC中有许多约束，我们不太有机会处理GAS，而是分析其非全局渐进稳定性（AS）。类似的，当有正不变集 $\mathcal{X} \subset \mathbb{R}^n$，且有正不变集 $\mathcal{A} \subset \textrm{int}(\mathcal{X})$ 封闭，局部渐进稳定性（locally asymptotically stable）定义为，
+由于 MPC 中有许多约束，我们不太有机会处理 GAS，而是分析其非全局渐进稳定性（AS）。类似的，当有正不变集 $\mathcal{X} \subset \mathbb{R}^n$，且有正不变集 $\mathcal{A} \subset \textrm{int}(\mathcal{X})$ 封闭，局部渐进稳定性（locally asymptotically stable）定义为，
 
 > 满足局部稳定性（local stability）：
 >
@@ -291,7 +291,7 @@ $$
 V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 > 则函数 $V$ 是李雅普诺夫函数。
 
-则有定理，
+可见当 $V(x)=0$ 当且仅当 $x\in \mathcal{A}$，另有定理， 
 
 > $\exist LF \Longrightarrow GAS$
 
@@ -303,7 +303,7 @@ V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 
 > $\exist LF \, \textrm{in} \, \mathcal{X}\Longrightarrow AS$
 
-该定理主要服务于MPC。由于约束存在，$\mathcal{X} \neq \mathbb{R}^n$，故我们需要找到一个李雅普诺夫函数 $V$ 和不变集 $\mathcal{X}$ 来得到渐进稳定性。
+该定理主要服务于 MPC。由于约束存在，$\mathcal{X} \neq \mathbb{R}^n$，故我们需要找到一个李雅普诺夫函数 $V$ 和不变集 $\mathcal{X}$ 来得到渐进稳定性。
 
 ### 1.2.7 对于线性系统的李雅普诺夫稳定理论
 
@@ -317,9 +317,9 @@ x^+ &= Ax\\
 \end{equation}
 $$
 
-则以下几种情况等价，
+则以下几种情况等价（注：$A \succ 0$ 代表 $A$ 为正定矩阵），
 
-- 对于 $\big\{ 0 \big\}$ 有GAS
+- 对于 $\big\{ 0 \big\}$ 有 GAS
 
 - $|\lambda| < 1, \forall \lambda \in eig(A) \longleftarrow$ 特征值在单位圆内
 
@@ -345,7 +345,7 @@ $$
 
 > $\exist \kappa(\cdot) \quad \textrm{subject to} \quad \mathcal{A} \, \textrm{ GAS } \, for \, x^+=f(x,\kappa(x))$
 
-控制不变集(control invariant set) $\mathcal{A}$ 定义为，
+控制不变集 (control invariant set) $\mathcal{A}$ 定义为，
 
 > $\mathcal{A} \subset \mathbb{R^n} \quad \textrm{subject to} \quad \forall x \in \mathcal{A}, \exist u \in \mathbb{U} \quad \textrm{subject to} \quad f(x) \in \mathcal{A}$
 
@@ -370,7 +370,7 @@ $$
 
 ### 1.2.9 稳定性理论小结
 
-本节定义了许多与李雅普诺夫函数相关的概念，其最终目的就是获得控制李雅普诺夫函数的定义，从而在MPC实际应用时可以分析其渐进稳定性。而当李雅普诺夫函数存在时，就意味着渐近稳定性存在，这是本节最重要的结论。而李雅普诺夫函数的存在则意味着李雅普诺夫函数递减且存在不变集。
+本节定义了许多与李雅普诺夫函数相关的概念，其最终目的就是获得控制李雅普诺夫函数的定义，从而在 MPC 实际应用时可以分析其渐进稳定性。而当李雅普诺夫函数存在时，就意味着渐近稳定性存在，这是本节最重要的结论。而李雅普诺夫函数的存在则意味着李雅普诺夫函数递减且存在不变集。
 
 ## 1.3 参考
 
@@ -404,7 +404,7 @@ $$
 
 [15] H. K. Khalil, "Nonlinear Systems", Chapter 4, 2002
 
-### 常用的MPC软件工具包
+### 常用的 MPC 软件工具包
 
 Model Predictive Control (MPC) toolbox (Matlab): mathworks.com/products/mpc
 
