@@ -1,4 +1,5 @@
 #! https://zhuanlan.zhihu.com/p/506342137
+
 # Lec 3 渐进稳定性及证明
 
 本节主要介绍 MPC 的稳定性理论及渐进稳定性的证明。
@@ -15,10 +16,10 @@ $$
 
 > **定义**：**李雅普诺夫函数 (Lyapunov function)**
 >
-> 假设集合 $\mathbb{X}$ 是系统 $x^+ = f(x)$ 的正不变集 (positive invariant set)，若函数 $V : \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$ ，存在 $K_\infin$ 函数 $\alpha_1, \alpha_2, \alpha_3$ 满足以下条件
-> $$ \alpha_1 (|x|) \leq V(x) \leq \alpha_2 (|x|) \\
-V(f(x)) - V(x) \leq - \alpha_3(|x|) $$
-> 则这个函数是李雅普诺夫函数。
+> 假设集合 $\mathcal{A}$ 是系统 $x^+ = f(x)$ 的正不变集，若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
+> $$ \alpha_1 (|x|_{\mathcal{A}}) \leq V(x) \leq \alpha_2 (|x|_{\mathcal{A}}) \\
+V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
+> 则函数 $V$ 是李雅普诺夫函数。
 
 在如上定义中提到了正不变集的概念，正不变集的定义如下：
 > 如果任意状态 $x \in \mathbb{X}$ 满足 $x^+ = f(x) \in \mathbb{X}$ ，则集合$\mathbb{X}$是正不变集。
@@ -49,7 +50,7 @@ $$
 
 ### 3.2.2 推导
 
-$V_N^0(\cdot)$ 需满足李雅普诺夫函数定义的两个条件，第一个条件很容易证明满足，我们的关注点在第二个条件上，即，
+$V_N^0(\cdot)$ 需满足全局李雅普诺夫函数定义的两个条件，第一个条件很容易证明满足，我们的关注点在第二个条件上，即，
 $$
 \underbrace { V _{ N } ^ { 0 } ( x ^ { + } ) }_ { ( 1 ) } \leq \underbrace{V _{ N } ^ { 0 } ( x )}_{(2)} - \alpha _{ 3 } ( | x | )
 $$
@@ -109,9 +110,9 @@ $$
 
 ## 3.3 时不变系统的稳定性
 
-对于时不变系统来说，与上节的无约束系统最大的区别是存在时不变的状态约束 $\mathbb{X}$​ 。 为了给出满足状态约束的初始状态 ($x \in \mathbb{X}$​) 稳定的条件，我们借助 terminal set 来推导这个稳定性条件。我们假设存在这样的一个 [控制不变集](https://en.wikipedia.org/wiki/Positively_invariant_set)
+对于时不变系统来说，与上节的无约束系统最大的区别是存在时不变的状态约束 $\mathbb{X}$​ 。此时证明系统稳定性不能使用全局李雅普诺夫定义，应该使用笔记1.2节中提到的局部李雅普诺夫函数定义。该部分的推导可以参考 MPC 教材[1]的第2.4节。
 
-$\mathbb{X}_f$​，即对于$\forall x \in \mathbb{X}_f$​ 都存在输入 $\exist u \in \mathbb{U}$​ 使得 $f(x, u) \in \mathbb{X}_f$​ ，也就是说，当控系统的状态落入这个集合$\mathbb{X}_f$​后，控制器都存在至少一个输入将系统的状态保留在这个集合中。另外，我们还假定在这个集合中存在局部的控制李雅普诺夫函数$V_f$ ，即
+为了给出满足状态约束的初始状态 ($x \in \mathbb{X}$​) 稳定的条件，我们借助 terminal set 来推导这个稳定性条件。我们假设存在这样的一个 [控制不变集](https://en.wikipedia.org/wiki/Positively_invariant_set) $\mathbb{X}_f$​，即对于$\forall x \in \mathbb{X}_f$​ 都存在输入 $\exist u \in \mathbb{U}$​ 使得 $f(x, u) \in \mathbb{X}_f$​ ，也就是说，当控系统的状态落入这个集合$\mathbb{X}_f$​后，控制器都存在至少一个输入将系统的状态保留在这个集合中。另外，我们还假定在这个集合中存在局部的控制李雅普诺夫函数$V_f$ ，即
 $$
 V _{ f } ( f ( x , u ) ) \leq V_ { f } ( x ) - \ell ( x , u )
 $$
