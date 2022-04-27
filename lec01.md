@@ -388,7 +388,7 @@ $$
 
 [7] Di Cairano et al., “Model predictive idle speed control: Design, analysis, and experimental evaluation”, IEEE Trans. Control Systems Technology, 2012
 
-[8] Di Cairano et al., “Vehicle yaw stability control by coordinated active front steering and di↵erential braking in the tire sideslip angles domain”, IEEE Trans. Control Systems Technology, 2013
+[8] Di Cairano et al., “Vehicle yaw stability control by coordinated active front steering and differential braking in the tire sideslip angles domain”, IEEE Trans. Control Systems Technology, 2013
 
 [9] Ocampo-Martinez et al., “Hierarchical and decentralised model predictive control of drinking water networks: Application to Barcelona case study”, IET Control Theory & Applications, 2012
 

@@ -25,19 +25,19 @@
 根据上述问题描述，我们可以将这个问题写成一个优化问题的形式：
 $$
 (x_{ref},u_{ref})(y_{ref})\in\begin{cases}
- \argmax\limits_{x_r,u_r} J(x_r,u_r)\\ \\
+ \argmin\limits_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
  s.t.\ \begin{bmatrix}
  I-A & -B\\
  C   & 0
 \end{bmatrix}\begin{bmatrix}
-x_r \\
-u_r
+x_{ref} \\
+u_{ref}
 \end{bmatrix}=\begin{bmatrix}
 0 \\
-y_r
+y_{ref}
 \end{bmatrix}\\ \\
 (\textbf{x}_{ref},\textbf{u}_{ref})\in \mathbb{X}\times\mathbb{U}\\
-Cx_r\in\mathbb{Y}
+Cx_{ref}\in\mathbb{Y}
 \end{cases}
 $$
 其中代价函数 $J$ 可以是我们自定义的任意代价函数。假设 MPC 所使用的模型与实际模型完全一致没有任何误差，则 Optimal target selection(OTS) 问题可以在控制开始之前被线下解决（offline），即提前算好每一步的$(\textbf{x}_{ref},\textbf{u}_{ref})$。
@@ -114,19 +114,19 @@ $$
 我们将上述观测器与之前的 OTS 问题相结合，OTS 问题可以被重新写为以下格式：
 $$
 (x_{ref},u_{ref})(\hat{d}, y_{ref})\in\begin{cases}
- \argmax\limits_{x_r,u_r} J(x_r,u_r)\\ \\
+ \argmin\limits_{x_{ref},u_{ref}} J(x_{ref},u_{ref})\\ \\
  s.t.\ \begin{bmatrix}
  I-A & -B\\
  C   & 0
 \end{bmatrix}\begin{bmatrix}
-x_r \\
-u_r
+x_{ref} \\
+u_{ref}
 \end{bmatrix}=\begin{bmatrix}
 0 \\
-y_r-\hat{d}
+y_{ref}-\hat{d}
 \end{bmatrix}\\ \\
 (\textbf{x}_{ref},\textbf{u}_{ref})\in \mathbb{X}\times\mathbb{U}\\
-Cx_r+\hat{d}\in\mathbb{Y}
+Cx_{ref}+\hat{d}\in\mathbb{Y}
 \end{cases}
 $$
 此时 OTS 问题需要被在线解决 (online)，因为我们并不能提前知道整个控制过程中的 $\hat{d}$ 的值，这需要每一步迭代计算才能得到。最终得到整个控制流程图如下：
