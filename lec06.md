@@ -60,4 +60,49 @@ $$
 
 ## MPC 设计
 
-理论上来说，
+理论上来说，我们可以把混合系统的模型预测控制问题转化后写成如下形式
+
+$$
+\left. \begin{array} { l l } { \min_ { x _ { N } , u _ { N } , \delta _ { N } , z _ { N } } } & { V _ { N } ( x _ { 0 } , u _ { N } ) = \sum _ { k = 0 } ^ { N - 1 } \{ \ell ( x ( k ) , u ( k ) ) \} } \\ { \text { s.t. } } & { x ( k + 1 ) = A x ( k ) + B _ { 1 } u ( k ) + B _ { 2 } \delta ( k ) + B _ { 3 } z ( k ) , \forall k } \\ { } & { E _ { 2 } \delta ( k ) + E _ { 3 } z ( k ) \leq E _ { 4 } x ( k ) + E _ { 1 } u ( k ) + E _ { 5 } , \forall k } \\ { } & { x _ { 0 } = x ( 0 ) . } \end{array} \right.
+$$
+
+式中的 $\delta(k)$ 是布尔变量，$z ( k )$是实变量。该问题的状态方程为
+
+$$
+x ( k ) = \phi ( k ; x _ { 0 } , u _ { k } , \delta _ { k } , z _ { k } ) = A ^ { k } x _ { 0 } + C _ { k } u _ { k } + C _ { k } ^ { \delta } \delta _ { k } + C _ { k } ^ { z } z _ { k }
+$$
+
+其中
+
+$$
+C _ { k } ^ { \delta } : = \left[ \begin{array} { l l l l } { B _ { 2 } } & { A B _ { 2 } } & { \cdots } & { A ^ { k - 1 } B _ { 2 } } \end{array} \right] , C _ { k } ^ { z } : = \left[ \begin{array} { l l l l } { B _ { 3 } } & { A B _ { 3 } } & { \cdots } & { A ^ { k - 1 } B _ { 3 } } \end{array} \right] .
+$$
+
+若 stage cost 为二次形式，且满足 Q 半正定、R正定，即
+$$
+\ell ( x , u ) = \frac { 1 } { 2 } ( x ^ { T } Q x + u ^ { T } R u ) , Q \succcurlyeq 0 , R \succ 0
+$$
+
+则以上问题可以整理成如下形式的成 MIQP 问题
+$$
+\mathbb{P} _ { N } ( x _ { 0 } ) : \left\{ \begin{array} { l l } { \operatorname { min } _ { \xi _ { N } } } & { \frac { 1 } { 2 } \xi _ { N } ^ { T } H \xi _ { N } + x _ { 0 } ^ { T } F \xi _ { N } } \\ { \text { s.t. } } & { G \xi _ { N } \leq W + S x _ { 0 } } \end{array} \right.
+$$
+
+
+其中的 $\xi _ { N }$ 包含了输入 $u$ 、布尔变量 $\delta(k)$和实变量$z ( k )$
+
+$$
+\xi _ { N } = [ \underbrace { u ( 0 ) , \ldots , u ( N - 1 ) } _ { \text { mixed-integer } } , \underbrace { \delta ( 0 ) , \ldots , \delta ( N - 1 ) } _ { \text { binary } } , \underbrace { z ( 0 ) , \ldots , z ( N - 1 ) } _ { \text { real } } ] ^ { T }
+$$
+
+
+
+
+
+稳定性
+
+- $x ( 0 ) = x _ { 0 }$ 使得 MIQP 在 $k = 0$ 时有可行解
+- 存在终端约束 $x(N) = x_{\text{ref}}$
+
+则 $\{x_{\text{ref}}\}$ 闭环系统渐进稳定
+
