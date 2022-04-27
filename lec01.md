@@ -16,9 +16,9 @@
     - [全局渐近稳定性（Global asymptotic stability）](#全局渐近稳定性global-asymptotic-stability)
     - [GAS 和 $\mathcal{KL}$ 函数](#gas-和-mathcalkl-函数)
     - [渐进稳定性（Asymptotic stability）](#渐进稳定性asymptotic-stability)
-    - [李亚普诺夫稳定理论（Lyapunov stability theory）](#李亚普诺夫稳定理论lyapunov-stability-theory)
-    - [对于线性系统的李亚普诺夫稳定理论](#对于线性系统的李亚普诺夫稳定理论)
-    - [对于非线性控制系统的李亚普诺夫稳定理论](#对于非线性控制系统的李亚普诺夫稳定理论)
+    - [李雅普诺夫稳定理论（Lyapunov stability theory）](#李雅普诺夫稳定理论lyapunov-stability-theory)
+    - [对于线性系统的李雅普诺夫稳定理论](#对于线性系统的李雅普诺夫稳定理论)
+    - [对于非线性控制系统的李雅普诺夫稳定理论](#对于非线性控制系统的李雅普诺夫稳定理论)
     - [稳定性理论小结](#稳定性理论小结)
   - [参考](#参考)
     - [常用的MPC软件工具包](#常用的mpc软件工具包)
@@ -35,7 +35,7 @@
 
 ![MPC](figures/Lec0102.png)
 
-MPC在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。上图描述了一个离散MPC要解决的控制任务，其中我们需要让测量到的输出（measuerd output）尽可能的贴近参考输出（reference output）。MPC通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N即为Horizon。
+MPC在应用上比较重要的一个思想就是滚动时域策略（Receding horizon policy）。上图描述了一个离散MPC要解决的控制任务，其中我们需要让测量到的输出（measured output）尽可能的贴近参考输出（reference output）。MPC通过预测模型给出了未来的预测输出（predicted output）和可以达到该预测输出的预测（最佳）控制输入（predicted control input）。而滚动时域即限制预测输出的时域范围，从当前时间到正无穷远的时间改为从当前时间到未来某一刻时间（k+N），N即为Horizon。
 
 ![MPC](figures/Lec0103.png)
 
@@ -83,7 +83,7 @@ $$
 \bm{u}_k:= (u(0), u(1), \dots, u(k-1))
 $$
 
-对于离散线性动力系统（discrete-time linear dyanimcal systems），状态空间形式可以表达为如下，
+对于离散线性动力系统（discrete-time linear dynamical systems），状态空间形式可以表达为如下，
 
 $$
 \begin{equation}
@@ -143,7 +143,7 @@ $$
 
 ## Lec 1.2 稳定性理论（Stability Theory）
 
-本节提出了由李亚普诺夫函数（Lyapunov function）和不变集（invariant set）作为主要内容的稳定性理论。参考书推荐Rawlings等的 [14] 和Khalil的 [15]。
+本节提出了由李雅普诺夫函数（Lyapunov function）和不变集（invariant set）作为主要内容的稳定性理论。参考书推荐Rawlings等的 [14] 和Khalil的 [15]。
 
 ### 离散非线性系统（Discrete-time nonlinear systems）
 
@@ -157,7 +157,7 @@ x^+ &= f(x)\\
 \end{equation}
 $$
 
-我们假设 $f$ 是局部有界（locally bounded）函数，其平衡点（euqilibirum point）为 $x^*=f(x^*)$，正不变集（positive invariant set） $\mathcal{A}$ 可被定义为，
+我们假设 $f$ 是局部有界（locally bounded）函数，其平衡点（equilibrium point）为 $x^*=f(x^*)$，正不变集（positive invariant set） $\mathcal{A}$ 可被定义为，
 
 > $\mathcal{A} \subset \mathbb{R^n} \quad \textrm{subject to} \quad f(x) \in \mathcal{A}, \forall x \in \mathcal{A}$
 
@@ -235,7 +235,7 @@ $$
 
 > 满足局部稳定性（local stability）：
 >
-> $\forall \epsilon > 0, \exists \delta > 0 \quad \textrm{subjet to} \quad |x|_{\mathcal{A}}<\delta \Longrightarrow |\phi(k;x)|_{\mathcal{A}}<\epsilon, \forall k \in \mathbb{N}$
+> $\forall \epsilon > 0, \exists \delta > 0 \quad \textrm{subject to} \quad |x|_{\mathcal{A}}<\delta \Longrightarrow |\phi(k;x)|_{\mathcal{A}}<\epsilon, \forall k \in \mathbb{N}$
 >
 > 满足全局吸引性（global attractivity）：
 >
@@ -261,11 +261,11 @@ $$
 
 > 满足局部稳定性（local stability）：
 >
-> $\forall \epsilon > 0, \exists \delta > 0 \quad \textrm{subjet to} \quad  x \in \big\{ x \in \mathcal{X} \, | \, |x|_{\mathcal{A}}<\delta \big\} \Longrightarrow |\phi(k;x)|_{\mathcal{A}}<\epsilon, \forall k \in \mathbb{N}$
+> $\forall \epsilon > 0, \exists \delta > 0 \quad \textrm{subject to} \quad  x \in \big\{ x \in \mathcal{X} \, | \, |x|_{\mathcal{A}}<\delta \big\} \Longrightarrow |\phi(k;x)|_{\mathcal{A}}<\epsilon, \forall k \in \mathbb{N}$
 >
 > 满足局部吸引性（local attractivity）：
 >
-> $\exist \eta > 0, \quad \textrm{subjet to} \quad  x \in \big\{ x \in \mathcal{X} \, | \, |x|_{\mathcal{A}}<\eta \big\}  \Longrightarrow \lim_{k \rarr \infty} |\phi(k;x)|_{\mathcal{A}} = 0$
+> $\exist \eta > 0, \quad \textrm{subject to} \quad  x \in \big\{ x \in \mathcal{X} \, | \, |x|_{\mathcal{A}}<\eta \big\}  \Longrightarrow \lim_{k \rarr \infty} |\phi(k;x)|_{\mathcal{A}} = 0$
 
 渐进稳定性定义（asymptotically stable）为
 
@@ -281,14 +281,14 @@ $$
 
 即吸引域为所有使得状态 $x$ 渐进稳定于 $\mathcal{A}$ 的初始状态的集合。
 
-### 李亚普诺夫稳定理论（Lyapunov stability theory）
+### 李雅普诺夫稳定理论（Lyapunov stability theory）
 
-我们定义李亚普诺夫函数（Lyapunov function）如下，
+我们定义李雅普诺夫函数（Lyapunov function）如下，
 
 > 假设集合 $\mathcal{A}$ 是系统 $x^+ = f(x)$ 的正不变集，若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
 > $$ \alpha_1 (|x|_{\mathcal{A}}) \leq V(x) \leq \alpha_2 (|x|_{\mathcal{A}}) \\
 V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
-> 则函数 $V$ 是李亚普诺夫函数。
+> 则函数 $V$ 是李雅普诺夫函数。
 
 则有定理，
 
@@ -302,9 +302,9 @@ V(f(x)) - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
 
 > $\exist LF \, \textrm{in} \, \mathcal{X}\Longrightarrow AS$
 
-该定理主要服务于MPC。由于约束存在，$\mathcal{X} \neq \mathbb{R}^n$，故我们需要找到一个李亚普诺夫函数 $V$ 和不变集 $\mathcal{X}$ 来得到渐进稳定性。
+该定理主要服务于MPC。由于约束存在，$\mathcal{X} \neq \mathbb{R}^n$，故我们需要找到一个李雅普诺夫函数 $V$ 和不变集 $\mathcal{X}$ 来得到渐进稳定性。
 
-### 对于线性系统的李亚普诺夫稳定理论
+### 对于线性系统的李雅普诺夫稳定理论
 
 若有线性系统，
 
@@ -322,13 +322,13 @@ $$
 
 - $|\lambda| < 1, \forall \lambda \in eig(A) \longleftarrow$ 特征值在单位圆内
 
-- $Q \succ 0, \exist P \succ 0, \quad \textrm{subjet to} \quad A^TPA-P=-Q$
+- $Q \succ 0, \exist P \succ 0, \quad \textrm{subject to} \quad A^TPA-P=-Q$
 
-- $\exist P \succ 0, \quad \textrm{subjet to} \quad A^TPA-P \prec 0$
+- $\exist P \succ 0, \quad \textrm{subject to} \quad A^TPA-P \prec 0$
 
-- $\exist P \succ 0, \quad \textrm{subjet to} \quad V(x)=x^TPx \, \textrm{is} \, LF$
+- $\exist P \succ 0, \quad \textrm{subject to} \quad V(x)=x^TPx \, \textrm{is} \, LF$
 
-### 对于非线性控制系统的李亚普诺夫稳定理论
+### 对于非线性控制系统的李雅普诺夫稳定理论
 
 若有非线性控制系统，
 
@@ -342,34 +342,34 @@ $$
 
 给定输入约束 $u \in \mathbb{U}$，则定义全局可稳定性（global stabilizability）为，
 
-> $\exist \kappa(\cdot) \quad \textrm{subjet to} \quad \mathcal{A} \, \textrm{ GAS } \, for \, x^+=f(x,\kappa(x))$
+> $\exist \kappa(\cdot) \quad \textrm{subject to} \quad \mathcal{A} \, \textrm{ GAS } \, for \, x^+=f(x,\kappa(x))$
 
-控制不变集(contorl invariant set) $\mathcal{A}$ 定义为，
+控制不变集(control invariant set) $\mathcal{A}$ 定义为，
 
 > $\mathcal{A} \subset \mathbb{R^n} \quad \textrm{subject to} \quad \forall x \in \mathcal{A}, \exist u \in \mathbb{U} \quad \textrm{subject to} \quad f(x) \in \mathcal{A}$
 
 即若至少有一个控制输入使得状态保持在 $\mathcal{A}$ 内即称其为控制不变集。
 
-若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李亚普诺夫函数（control lyapunov function）如下，
+若有控制不变集 $\mathcal{X}, \mathcal{A}$ 且 $\mathcal{A} \subset \mathcal{X}$，我们可以继续定义控制李雅普诺夫函数（control lyapunov function）如下，
 
 > 若函数 $V: \mathbb{R}^n \rightarrow \mathbb{R}_{\geq 0}$， $\forall x \in \mathbb{R}^n$ 存在 $\mathcal{K}_\infty$ 函数 $\alpha_1, \alpha_2$，$\mathcal{PD}$ 函数 $\alpha_3$ 满足以下条件
 > $$ \alpha_1 (|x|_{\mathcal{A}}) \leq V(x) \leq \alpha_2 (|x|_{\mathcal{A}}) \\
 \inf_{v \in \mathbb{U}} \big\{ V(f(x,v)) \, | \, f(x,v) \in \mathcal{X} \big\} - V(x) \leq - \alpha_3(|x|_{\mathcal{A}}) $$
-> 则函数 $V$ 是控制李亚普诺夫函数。
+> 则函数 $V$ 是控制李雅普诺夫函数。
 
-其与李亚普诺夫函数的主要区别就是需要有至少一个控制输入保证其李亚普诺夫函数的递减性。且要求状态 $x$ 一直需要在 $\mathcal{X}$ 内。则有定理，
+其与李雅普诺夫函数的主要区别就是需要有至少一个控制输入保证其李雅普诺夫函数的递减性。且要求状态 $x$ 一直需要在 $\mathcal{X}$ 内。则有定理，
 
 > $\exist CLF \Longrightarrow$ 全局可稳定性（Global stabilizability）。
 
-定义李亚普诺夫控制法则为，
+定义李雅普诺夫控制法则为，
 
 > $\kappa(x) := \argmin_{v \in \mathbb{U}} \big\{ V(f(x,v)) \, | \, f(x,v) \in \mathcal{X} \big\}$
 
-李亚普诺夫控制法则所获得的 $\kappa(x)$ 即为当前状态 $x$ 下使得 $x+ \in \mathcal{X}$ 时控制李亚普诺夫函数最小的控制输入。
+李雅普诺夫控制法则所获得的 $\kappa(x)$ 即为当前状态 $x$ 下使得 $x+ \in \mathcal{X}$ 时控制李雅普诺夫函数最小的控制输入。
 
 ### 稳定性理论小结
 
-本节定义了许多与李亚普诺夫函数相关的概念，其最终目的就是获得控制李亚普诺夫函数的定义，从而在MPC实际应用时可以分析其渐进稳定性。而当李雅普诺夫函数存在时，就意味着渐近稳定性存在，这是本节最重要的结论。而李雅普诺夫函数的存在则意味着李雅普诺夫函数递减且存在不变集。
+本节定义了许多与李雅普诺夫函数相关的概念，其最终目的就是获得控制李雅普诺夫函数的定义，从而在MPC实际应用时可以分析其渐进稳定性。而当李雅普诺夫函数存在时，就意味着渐近稳定性存在，这是本节最重要的结论。而李雅普诺夫函数的存在则意味着李雅普诺夫函数递减且存在不变集。
 
 ## 参考
 
