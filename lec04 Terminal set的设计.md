@@ -29,7 +29,9 @@ $$
 * 控制不变性（control invariant）
   
 $$
+\begin{array}{l}
 \forall x \in \mathcal{X_f} \ ,\exists u \in \mathcal{U}\ , x^+=f(x,u)\in \mathcal{X_f}
+\end{array}
 $$
 
 对于终端集$\mathcal{X}_f$中任意状态$x$，**存在**符合输入约束的 $u$ 使它下一步状态$x^+$依然在$\mathcal{X_f}$里。表示当状态$x$进入终端集$\mathcal{X_f}$后，后续状态不会再离开$\mathcal{X_f}$。
@@ -37,7 +39,9 @@ $$
 * 约束容许性（constraint admissible）
   
 $$
+\begin{array}{l}
 \forall x \in \mathcal{X_f} \ , x\in \mathcal{X}
+\end{array}
 $$
 
 终端集$X_f$中任意状态$x$的符合**状态约束集**$\mathcal{X}$。状态约束指施加在状态变量上的约束，比如通过在四旋翼无人机系统的横滚角（roll）和俯仰角（pitch）上施加约束，来限制角度，保证系统在线性化模型的平衡点附近工作。
@@ -45,17 +49,20 @@ $$
 输入$u$也需要符合输入约束。比如四旋翼无人机系统中，限制推力或转矩上的约束。若控制输入$u$为状态变量的函数（状态反馈）, 则也可以写成对状态$x$的约束。
 
 $$
+\begin{array}{l}
 \forall x \in \mathcal{X_f} \ , u=\mathcal{K}_N(x)\in \mathcal{U}
+\end{array}
 $$
 下图为一个简单的二维示意图。$\mathcal{X_f}$（红色）中所有状态满足状态约束，即包含于蓝色集合$X$。同时后续状态轨迹保持在$X_f$内。
-    <div align=center>
-    <img width="400" height="350" src=figures/Lec0401.png />
-    </div>
+
+![MPC](figures/Lec0401.png)
 
 * 李雅普诺夫递减性 （lyapunov decrease）
   
 $$
+\begin{array}{l}
 V_{f}(f(x))\leq V_{f}(x)-l(x,u) \ ,\forall x \in \mathcal{X_f} \ ,\exists u \in \mathcal{U}
+\end{array}
 $$
 
 对于终端集中任意状态$x$, 总有 $u \in \mathcal{U}$ , 使下一步的终端代价$V_{f}(f(x))$小于等于此状态下的终端代价$V_{f}(x)$减去阶段代价$l(x,u)$。此性质主要针对终端代价函数，但在终端集中的任意状态$x$都需满足。
@@ -67,7 +74,9 @@ $$
 第一种方法采用基于无约束 LQR 的方法控制第 N 步之后的闭环系统。换句话说，当预测阶段 (Horizon) 最后一步的状态$x_N$进入终端集之后，MPC 采用和无约束 LQR 相同的控制策略。具体方法其实就是把离散代数黎卡提 Riccati 方程（DARE）的解作为终端代价函数的二次型矩阵。最终得到终端集的是由线性不等式约束围成的多面体。
 
 $$
+\begin{array}{l}
 \mathcal{X}_f=\{x \in \mathbf{R}^n | Hx \leq h\}
+\end{array}
 $$
 
 ### 4.3.1 李雅普诺夫递减性
@@ -77,62 +86,81 @@ $$
 考虑 LTI 系统状态空间方程：
 
 $$
+\begin{array}{l}
 x_{k+1}=Ax_k+Bu_k
+\end{array}
 $$
 和二次状态代价函数：
 
 $$
+\begin{array}{l}
 l(x, u) = \frac{1}{2}(x^TQx + u^TRu)
+\end{array}
 $$
 其中$（A，B）$可控，$Q，R$正定。对于此系统考虑无限阶段 (infinite horizon) 的无约束 (uc) 优化问题：
 
 $$
+\begin{array}{l}
 \mathbb{P}_{\infty}^{\text {uc }}(x): \min _{u} \sum_{k=0}^{\infty} \ell(x(k), u(k))
+\end{array}
 $$
 
 根据离散代数黎卡提方程（DARE）, 具体推导过程请参考第二章：
 
 $$
+\begin{array}{l}
 P=A_K^{T} P A_K+Q_K>0
+\end{array}
 $$
 其中$P>0$正定。$A_K=A+BK \ $ （有些资料写的是$A-BK$, 是因为这里取$K$的时候将前边的负号也算上了）, $\ Q_K=Q+K^TRK$:
 
 $$
+\begin{array}{l}
 x_{k+1}=(A+BK)x_k=A_Kx_k
+\end{array}
 $$
 
 $$
+\begin{array}{l}
 l(x_k)=\frac{1}{2}x_k^T(Q+K^TRK)x_k=\frac{1}{2}x_k^TQ_Kx_k
+\end{array}
 $$
 此时输入$u=Kx$为状态反馈。$K$为无约束 LQR 控制增益矩阵：
 
 $$
+\begin{array}{l}
 K=-\left(B^{\top} P B+R\right)^{-1} B^{\top} P A^{\top}
+\end{array}
 $$
 求解上述 DARE 方程，将$P$作为终端代价函数的二次型矩阵：
 
 $$
+\begin{array}{l}
 V_f(x)=\frac{1}{2}x^TPx
+\end{array}
 $$
 当 MPC 控制状态进入终端集后，MPC 的终端代价函数$V_f$和 LQR 代价函数相同。二者都会找到$V_f$作为代价函数的最优解，所以 MPC 控制输入会和无约束 LQR 控制输入相同，即$u=Kx$。
 
 对于任意对于终端集中任意状态$x_k$, 下一步的终端代价$V_{f}(x_{k+1})$为：
 
 $$
+\begin{array}{l}
 V_{f}(x_{k+1})=V_f(A_Kx_k)=\frac{1}{2}x_K^T(A_K^TPA_K)x_k=\frac{1}{2}x_K^T(P-Q_K)x_k
+\end{array}
 $$
 所以满足李雅普诺夫递减性：
 
 $$
+\begin{array}{l}
 V_{f}(x_{k+1})=\frac{1}{2}x_K^T(P-Q_K)x_k=V_{f}(x_k)-l(x_k)
+\end{array}
 $$
 
 ### 4.3.2 生成终端集的方法
 
 生成$X_f$具体算法如下 [2]：
-<div align=center>
-    <img width="380" height="420" src=figures/Lec0402.png />
-    </div>
+
+![MPC](figures/Lec0402.png)
 
 其中$f_i$表示第$i$个线性约束函数，即$H_ix$。$H$是包含了所有终端线性不等式约束函数的矩阵，它的行数等于约束的个数，列数等于状态变量的个数。终端集$X_f$为线性不等式约束$Hx \leq h$下的集合。可以看出，每个线性不等式约束相当于状态空间中的一个超平面。又由于$X_f$为紧集，最后形成$X_f$的形状是用多个超平面围出来的一个高维度多面体 (Polyhedron)。多面体中的所有点（状态$x$）满足终端集性质。
 
@@ -145,8 +173,10 @@ $$
 根据约束容许性质，状态约束$x \in \mathcal{X} $, 输入约束$u \in \mathcal{U} $应分别被满足。写为线性不等式约束：
 
 $$
+\begin{array}{l}
  \mathcal{X} \subseteq\left\{H_x x \leq h_{x}\right\} \\
 \mathcal{U} \subseteq\left\{H_{u} u \leq h_{u}\right\}
+\end{array}
 $$
 
 当$u=Kx$，即输入为状态反馈时有：
@@ -190,11 +220,9 @@ $$
 
 更直观的理解请看下面的二维简化示意图：
 
-<div align=center>
-    <img width="325" height="250" src=figures/Lec0403.png />
-    <img width="325" height="250" src=figures/Lec0404.png />
-    <img width="325" height="250" src=figures/Lec0405.png />
-</div>
+![MPC](figures/Lec0403.png)
+![MPC](figures/Lec0404.png)
+![MPC](figures/Lec0405.png)
 
 最终得到终端集约束：
 
@@ -209,50 +237,55 @@ $$
 将正定连续的二次函数作为终端代价函数：
 
 $$
+\begin{array}{l}
 V_f(x)=\frac{1}{2}x^TPx
+\end{array}
 $$
 其中$P$不一定需要像之前一样是 DARE 的解，但需要额外验证满足李雅普诺夫递减性。如果依然选取 DARE 的解作为$P$, 根据之前证明，李雅普诺夫递减性会有保证。
 
 选择$V_f$的水平子集 (sublevel set) 作为终端集$\mathcal{X}_f$:
 
 $$
+\begin{array}{l}
 \mathcal{X}_f=\{x \in \mathbf{R}^n | V_f(x) \leq c\}
+\end{array}
 $$
 
 $$
+\begin{array}{l}
 c>0 \; s.t. \ \mathcal{X}_f \subseteq \mathcal{X}, K(\mathcal{X}_f)\subseteq \mathcal{U}
+\end{array}
 $$
 
 其中$c$取一大于零常数。终端集$\mathcal{X}_f$的控制不变性也很容易从李雅普诺夫递减性推出。
 
 $$
+\begin{array}{l}
 V_{f}(f(x))\leq V_{f}(x)-l(x,u) \leq c
+\end{array}
 $$
 由于下一步的终端代价函数值$V_f(f(x))$一定小于等于当前步的终端代价$V_f(x)$，所以下一步的状态$x^+=f(x)$一定依然属于终端集。换句话说，进入终端集后下一步所有的可能状态的终端代价值一定小于等于$c$ , 所以它们组成的集合一定为$\mathcal{X}_f$子集。
 
 由于生成的终端集为正定二次函数的水平子集，终端集的形状是一个在高维度中的椭球。
 
 最后，约束容许性是通过将 c 设置并调整为一个较小值，从而保证生成的终端集较小，不会超出约束容许集的范围来满足的。一般通过检查椭球的外接多面体的顶点是否在约束容许集的范围内来确定是否满足约束容许性。通过计算 $P$ 的特征值及特征向量得到椭球的半轴 semiaxis 向量，从而得到顶点。当所有顶点都在约束容许集内时，终端集$\mathcal{X}_f$一定满足约束容许性。
-<div align=center>
-    <img width="380" height="270" src=figures/Lec0408.png />
-</div>
+
+![MPC](figures/Lec0408.png)
 
 注意此方法会使计算出的终端集比实际终端集更小，而实际上我们希望终端集尽可能大。
 
-<div align=center>
-    <img width="300" height="250" src=figures/Lec0406.png />
-</div>
+![MPC](figures/Lec0406.png)
 
 如上图所示，虽然此时水平子集以满足约束容许性，但外接多面体顶点依然处在约束容许集之外。所以需要进一步减小 c 的值。
 
-<div align=center>
-    <img width="300" height="250" src=figures/Lec0407.png />
-</div>
+![MPC](figures/Lec0407.png)
 
 当 c 减小到一定值时，$V_{f}$水平子集的外接多面体顶点都会在约束容许集内，将此时的水平子集作为终端集。
 
 $$
+\begin{array}{l}
 x_N \in \mathcal{X_f}\Rightarrow \frac{1}{2}x_N^TPx_N\leq c
+\end{array}
 $$
 <!-- 
 代码实例请参考：[方法二生成四旋翼无人机系统终端集](https://github.com/smoggy-P/MPC-Collision-Avoidance/blob/2de1c6459e20e53177c2861ceefe3a305f9139b1/MPC_controller.py)。 -->
@@ -261,7 +294,9 @@ $$
 第三种方法不直接计算终端集，并对最后一步状态$x_N$施加硬约束。而是直接通过增大终端代价函数$V_f$作为软约束来使$x_N$尽可能贴近原点（平衡点）。所以每次预测时的总代价函数为：
 
 $$
+\begin{array}{l}
 V_{N}^{\beta}(x, \boldsymbol{u})=\sum_{k=0}^{N-1}\{\ell(x_k, u_k)\}+\beta V_{\mathrm{f}}(x_N), \; \beta \gg 1
+\end{array}
 $$
 
 可以看到，此方法通过将终端代价乘一个远大于 1 的常数$\beta$，来实现对数值较大的 $x_N$的惩罚。
@@ -269,16 +304,22 @@ $$
 当选择的$V_f$符合李雅普诺夫递减时，$\beta V_f$同样符合李雅普诺夫递减。由$\beta \gg 1, l(x,u)>0$有：
 
 $$
+\begin{array}{l}
 \beta V_{\mathrm{f}}(f(x, u)) \leq \beta V_{\mathrm{f}}(x)-\beta \ell(x, u) \leq \beta V_{\mathrm{f}}(x)-\ell(x, u)
+\end{array}
 $$
 
 对于约束容许性和控制不变性的证明，和之前方法 2 类似。通过假设一个水平子集：
 $$
+\begin{array}{l}
 \mathcal{X}_f=W(a)=\{x \in \mathbf{R}^n | V_f(x) \leq a\}
+\end{array}
 $$
 
 $$
+\begin{array}{l}
 a>0 \; s.t. \ \mathcal{X}_f \subseteq \mathcal{X}, K(\mathcal{X}_f)\subseteq \mathcal{U}
+\end{array}
 $$
 来证明约束容许性和控制不变性（参考方法 2）。但不同的是，$W(a)$只用来在理论上证明。在实际计算时，并不作为硬约束添加在$x_N$上。而是通过调整增大$\beta$使$x_N$进入$\mathcal{X}_f$.
 
@@ -301,9 +342,9 @@ $$
 MPC 不能将任意初始状态在预测步数内控制到进入终端集（比如现在位置离目标位置较远时）。这引入了可达集$\mathcal{X}_N$的概念。可达集 (feasible set) 包含所有可以在预测步数（horizon）之内进入终端集的初始状态。也就是说，一旦初始状态在可达集内，MPC 一定会找到解。但一般对于高维系统来说，可达集较难从数值上计算。当找不到解时，可以尝试增大 MPC 预测步数。
 
 下图是一个可达集和终端集的二维截面示例。
-<div align=center>
-    <img width="300" height="250" src=figures/Lec0409.png />
-</div>
+
+![MPC](figures/Lec0409.png)
+
 如上图所示，黄色区域代表了终端集，绿色区域代表了可达集，外层深色区域为不可达的状态点。当预测步数 (horizon) 增加时，绿色区域会变大。
 
 #### 5.2.2 目标跟踪 (Reference tracking) 问题
