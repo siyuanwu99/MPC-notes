@@ -229,6 +229,6 @@ $$
 
 [1] S. Grammatico, “Lecture 5. model predictive control” 2022
 
-[2]G. Pannocchia and J. Rawlings, “Disturbance Models for Offset-Free Model-Predictive Control,” AIChE Journal, vol. 49, pp. 426–437, Feb. 2003, doi: 10.1002/aic.690490213.
+[2] G. Pannocchia and J. Rawlings, “Disturbance Models for Offset-Free Model-Predictive Control,” AIChE Journal, vol. 49, pp. 426–437, Feb. 2003, doi: 10.1002/aic.690490213.
 
 [3] Rawlings, J. B., Mayne, D. Q., & Diehl, M. (2017). Model predictive control: Theory, computation, and design.
