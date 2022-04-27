@@ -1,3 +1,4 @@
+#! https://zhuanlan.zhihu.com/p/506347060
 # Lec 4 MPC 终端集（Terminal set）的设计
 
 ## 4.1 简介
@@ -56,6 +57,7 @@ $$
 下图为一个简单的二维示意图。$\mathcal{X_f}$（红色）中所有状态满足状态约束，即包含于蓝色集合$X$。同时后续状态轨迹保持在$X_f$内。
 
 ![MPC](figures/Lec0401.png)
+
 
 * 李雅普诺夫递减性 （lyapunov decrease）
   
