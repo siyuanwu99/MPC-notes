@@ -1,6 +1,6 @@
 # Lec 2  从 LQR 到 MPC
 
-## 引子：凸优化（Convex Optimization）
+## 2.1 引子：凸优化（Convex Optimization）
 
 MPC 的实际上就是循环求解凸优化问题，所以有必要简单铺垫相关知识。一本大家都推荐的参考书应该是 Boyd 的 [《凸优化》](https://web.stanford.edu/~boyd/cvxbook/)。
 
@@ -21,9 +21,9 @@ $$
 - 局部最优解也就是全局最优解。
 - 已经有成熟的算法处理这类问题了，也就是说，对问题完成建模之后可以直接丢给求解器。
 
-## 线性二次型调节器 （LQR）
+## 2.2 线性二次型调节器 （LQR）
 
-### 有限阶段 （Finite horizon）的 LQR
+### 2.2.1 有限阶段 （Finite horizon）的 LQR
 
 Finite horizon LQR 是后续方法的基础，它对应的优化问题可以写成如下形式：
 $$
@@ -39,12 +39,13 @@ $$
 $$
 \begin{equation}
 \begin{aligned}
-    l(x(k), u(k))=& x(k)^T Q x(k) + u(k)^T R u(k)\\
-    V_f(x(N))=& x(N)^T P x(N)
+    l(x(k), u(k))=& x(k)^\intercal Q x(k) + u(k)^\intercal R u(k)\\
+    V_f(x(N))=& x(N)^\intercal P x(N)
 \end{aligned}
 \end{equation}
 $$
-x(k)^T Q x(k)$ 意味着尽量缩小状态误差，$u(k)^T R u(k)$则意味着在接近目标状态的同时要尽量减小输入量的值。在这里，我们需要$Q, P\succeq0$ 且 $R\succ0$来保证代价函数是凸的二次型。
+
+$x(k)^\intercal Q x(k)$ 意味着尽量缩小状态误差，$u(k)^\intercal R u(k)$则意味着在接近目标状态的同时要尽量减小输入量的值。在这里，我们需要$Q, P\succeq0$ 半正定 且 $R\succ0$ 正定来保证代价函数是凸的二次型。
 
 上边这个优化问题是多阶段（multistage）优化问题，可以通过动态规划（dynamic programming）的方法求得最优输入的闭式解。**推导如下：**
 
@@ -59,23 +60,23 @@ $$
 &\quad=(1 / 2)\left(|x(N-1)|_{Q}^{2}+|(u(N-1)-v)|_{H}^{2}+d\right)
 \end{aligned}
 $$
-（注：$|x|_Q = x^T Q x$)
+（注：$|x|_Q = x^\intercal Q x$)
 
 其中，
 $$
 \begin{aligned}
-H &=R+B^{T} P B \\
-v &=-\left(B^{T} P B+R\right)^{-1} B^{T} P A x(N-1) \\
-d &=x(N-1)^{T}\left(A^{T} P A-A^{T} P B\left(B^{T} P B+R\right)^{-1} B^{T} P A\right) x(N-1)
+H &=R+B^{\intercal} P B \\
+v &=-\left(B^{\intercal} P B+R\right)^{-1} B^{\intercal} P A x(N-1) \\
+d &=x(N-1)^{\intercal}\left(A^{\intercal} P A-A^{\intercal} P B\left(B^{\intercal} P B+R\right)^{-1} B^{\intercal} P A\right) x(N-1)
 \end{aligned}
 $$
-如果我们最小化 $\ell(x(N-1), u(N-1))+V_f(x(N))$，就可以得到在 $N-1$ 阶段的应该采用的最优输入 $u_{N-1}^{0}$。以及在采用 $u_{N-1}^{0}$ 的情况下，对应下一个阶段的最优状态 $x_{N}^{0}$ 和最优值函数（optimal cost to go）$V_{N-1}^{0} = min\{\ell(x(N-1), u(N-1))+V_f(x(N))\}$。具体的表达如下所示：
+如果我们最小化 $\ell(x(N-1), u(N-1))+V_f(x(N))$，就可以得到在 $N-1$ 阶段的应该采用的最优输入 $u_{N-1}^{0}$。以及在采用 $u_{N-1}^{0}$ 的情况下，对应下一个阶段的最优状态 $x_{N}^{0}$ 和最优值函数（optimal cost-to-go）$V_{N-1}^{0} = \min\{\ell(x(N-1), u(N-1))+V_f(x(N))\}$。具体的表达如下所示：
 $$
 \begin{equation}
 \begin{aligned}
 u_{N-1}^{0} &=K(N-1) x(N-1) \\
 x_{N}^{0} &=(A+B K(N-1)) x(N-1) \\
-V_{N-1}^{0} &=(1 / 2) x(N-1)^{T} \Pi(N-1) x(N-1)\\
+V_{N-1}^{0} &=(1 / 2) x(N-1)^{\intercal} \Pi(N-1) x(N-1)\\
 \end{aligned}
 \end{equation}
 $$
@@ -84,8 +85,8 @@ $$
 $$
 \begin{equation}
 \begin{aligned}
-K(N-1) &=-\left(B^{T} P B+R\right)^{-1} B^{T} P A\\
-\Pi(N-1) &=Q+A^{T} P A-A^{T} P B\left(B^{T} P B+R\right)^{-1} B^{T} P A
+K(N-1) &=-\left(B^{\intercal} P B+R\right)^{-1} B^{\intercal} P A\\
+\Pi(N-1) &=Q+A^{\intercal} P A-A^{\intercal} P B\left(B^{\intercal} P B+R\right)^{-1} B^{\intercal} P A
 \end{aligned}
 \end{equation}
 $$
@@ -105,16 +106,16 @@ $$
 \begin{aligned}
 u_{N-2}^{0}(x) &=K(N-2) x \\
 x_{N-1}^{0}(x) &=(A+B K(N-2)) x \\
-V_{N-2}^{0}(x) &=(1 / 2) x^{T} \Pi(N-2) x \\
-K(N-2) &=-\left(B^{T} \Pi(N-1) B+R\right)^{-1} B^{T} \Pi(N-1) A \\
-\Pi(N-2) &=Q+A^{T} \Pi(N-1) A-\\
-& A^{T} \Pi(N-1) B\left(B^{T} \Pi(N-1) B+R\right)^{-1} B^{T} \Pi(N-1) A
+V_{N-2}^{0}(x) &=(1 / 2) x^{\intercal} \Pi(N-2) x \\
+K(N-2) &=-\left(B^{\intercal} \Pi(N-1) B+R\right)^{-1} B^{\intercal} \Pi(N-1) A \\
+\Pi(N-2) &=Q+A^{\intercal} \Pi(N-1) A-\\
+& A^{\intercal} \Pi(N-1) B\left(B^{\intercal} \Pi(N-1) B+R\right)^{-1} B^{\intercal} \Pi(N-1) A
 \end{aligned}
 $$
 以此类推，最终我们可以得到一个重要的递推公式：
 
 $$
-\Pi(k-1)=Q+A^{T} \Pi(k) A-A^{T} \Pi(k) B\left(B^{T} \Pi(k) B+R\right)^{-1} B^{T} \Pi(k) A， \\
+\Pi(k-1)=Q+A^{\intercal} \Pi(k) A-A^{\intercal} \Pi(k) B\left(B^{\intercal} \Pi(k) B+R\right)^{-1} B^{\intercal} \Pi(k) A， \\
 k=N, N-1, \ldots, 1
 $$
 这个递推公式的终止条件为 $\Pi(N)=P$。
@@ -123,22 +124,22 @@ $$
 
 $$
 u_{k}^{0}(x)=K(k) x \quad k=N-1, N-2, \ldots, 0\\
-K(k)=-\left(B^{T} \Pi(k+1) B+R\right)^{-1} B^{T} \Pi(k+1) A \quad k=N-1, N-2, \ldots, 0
+K(k)=-\left(B^{\intercal} \Pi(k+1) B+R\right)^{-1} B^{\intercal} \Pi(k+1) A \quad k=N-1, N-2, \ldots, 0
 $$
 最优值函数为：
 
 $$
-V_{k}^{0}(x)=(1 / 2) x^{T} \Pi(k) x \quad k=N, N-1, \ldots, 0
+V_{k}^{0}(x)=(1 / 2) x^{\intercal} \Pi(k) x \quad k=N, N-1, \ldots, 0
 $$
 这个最优值函数很有意思，它代表了从第$k$个阶段代价以后的所有代价函数的最优值。
 
-### 无限阶段 （infinite horizon）的 LQR
+### 2.2.2 无限阶段 （infinite horizon）的 LQR
 
-当 horizon 从$N$不断增大，知道无穷的时候，finite horizon LQR 就延伸成了 infinite horizion LQR，优化问题如下：
+当预测步长 (time horizon) 从$N$不断增大，直到无穷的时候，finite horizon LQR 就延伸成了 infinite horizion LQR，优化问题如下：
 $$
 \begin{equation}
 \begin{aligned}
-\min_{\boldsymbol{u}_{N}} \quad & V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)= \sum_{k=0}^{\infty}\{x(k)^T Q x(k) + u(k)^T R u(k)\}\\
+\min_{\boldsymbol{u}_{N}} \quad & V_{N}\left(x_{0}, \boldsymbol{u}_{N}\right)= \sum_{k=0}^{\infty}\{x(k)^\intercal Q x(k) + u(k)^\intercal R u(k)\}\\
 \textrm{subject to} \quad & x(0)=x_{0} \\
 & x(k+1)=Ax(k) + Bu(k), \forall k\in \{0, ..., N-1\} \\
 \end{aligned}
@@ -146,19 +147,19 @@ $$
 $$
 现在我们把 Finite horizon LQR 推出的解推广到 Infinite horizon 的情况。当 $k$ 趋近于无穷的时候，有 $\Pi(k-1)=\Pi(k)$，若我们把 $\Pi(k)$ 统一用 $\Pi$ 表示，可以得到：
 $$
-\Pi=Q+A^{T} \Pi A-A^{T} \Pi B\left(B^{T} \Pi B+R\right)^{-1} B^{T} \Pi A
+\Pi=Q+A^{\intercal} \Pi A-A^{\intercal} \Pi B\left(B^{\intercal} \Pi B+R\right)^{-1} B^{\intercal} \Pi A
 $$
 这就是离散代数黎卡提方程 Discrete Algebraic Riccati Equation (DARE)。通过解这个方程，我们就可以得到 Infinite horizon LQR 的最优输入，即：
 $$
 u^{0}(x)=K x \\
-K=-\left(B^{T} \Pi B+R\right)^{-1} B^{T} \Pi A
+K=-\left(B^{\intercal} \Pi B+R\right)^{-1} B^{\intercal} \Pi A
 $$
 此时的最优代价函数为：
 $$
-V^{0}(x)=(1 / 2) x^{T} \Pi x
+V^{0}(x)=(1 / 2) x^{\intercal} \Pi x
 $$
 
-## 模型预测控制（MPC）
+## 2.3 模型预测控制（MPC）
 
 MPC 的优化问题的形式如下：
 $$
@@ -178,7 +179,7 @@ $$
 - 当模型是线性的时候，可以通过设计合理的终端约束（terminal constraint) 和终端代价（terminal cost）来保证系统稳定性（stability）。具体的证明在之后的章节会讲到。
 - 可以根据任务来设计各种各样的约束，比如可以实现动态避障。
 
-## 总结
+## 2.4 总结
 
 在本文中，我们介绍了 finite horizon LQR、infinite horizon LQR、MPC。那么这三种方法孰优孰劣呢？请见下表：
 | Method | Stability | Constraints | Model |
