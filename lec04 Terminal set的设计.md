@@ -173,7 +173,7 @@ $$
 
 ### 4.3.3 生成终端集原理
 
-根据约束容许性质，状态约束$x \in \mathcal{X} $, 输入约束$u \in \mathcal{U} $应分别被满足。写为线性不等式约束：
+根据约束容许性质，状态约束 $x \in \mathcal{X}$ , 输入约束 $u \in \mathcal{U}$ 应分别被满足。写为线性不等式约束：
 
 $$
 \begin{array}{l}
@@ -203,7 +203,7 @@ h_{x}
 \end{array}\right]
 $$
 
-上式的$[K ; I]$就是之前算法中的$K_{aug}$。同理，对于下一步的状态$x^+$同样需要符合约束：
+上式的 $[K ; I]$ 就是之前算法中的 $K_{aug}$ 。同理，对于下一步的状态 $x^+$ 同样需要符合约束：
 
 $$
 \left[\begin{array}{ll}
@@ -219,7 +219,7 @@ h_{x}
 $$
 每前进一步就会多乘一个$A_K$, 所以会有$A_K$的多次幂。
 
-**而这个算法构造控制不变集（control invariant set）的方法核心其实就是每前进一步时，通过求解线性规划（LP）问题检查下一步的所有状态$\mathbf{x_{k+1}}$组成的集合是不是前一步所有状态$\mathbf{x_k}$组成集合的子集。如果不是，那么取所有这两步状态集合的交集（通过添加约束）作为当前状态集合，然后用这个集合往后接着推，检查再下一步的所有状态的集合。直到找到连续两步中，后一步的所有状态$\mathbf{x_{k+1}}$组成的集合完全包含于前一步所有状态组成的集合，则前一步所有状态$x_k$组成的集合为控制不变集。**
+**而这个算法构造控制不变集（control invariant set）的方法核心其实就是每前进一步时，通过求解线性规划（LP）问题检查下一步的所有状态 $\mathbf{x_{k+1}}$ 组成的集合是不是前一步所有状态 $\mathbf{x_k}$ 组成集合的子集。如果不是，那么取所有这两步状态集合的交集（通过添加约束）作为当前状态集合，然后用这个集合往后接着推，检查再下一步的所有状态的集合。直到找到连续两步中，后一步的所有状态 $\mathbf{x_{k+1}}$ 组成的集合完全包含于前一步所有状态组成的集合，则前一步所有状态 $x_k$ 组成的集合为控制不变集**
 
 更直观的理解请看下面的二维简化示意图：
 
@@ -360,10 +360,10 @@ MPC 不能将任意初始状态在预测步数内控制到进入终端集（比�
 
 对于一般的系统而言（包括无法线性化的非线性系统），当以下性质满足（充分不必要条件），也可以确认系统的渐近稳定性：
 
-1. f 连续，$\ell,V_f$为二次函数且连续
-2. $\forall x \in \mathbb{X}_{\mathrm{f}}, \exists u \in \mathbb{U} \text { s.t. } f(x, u) \in \mathbb{X}_{\mathrm{f}}  $
-3. $V_{\mathrm{f}}(f(x, u)) \leq V_{\mathrm{f}}(x)-\ell(x, u) $
-4. $\ell(x, u)=\frac{1}{2}\left(x^{\top} Q x+u^{\top} R u\right) \geq \frac{1}{2} x^{\top} Q x \geq \frac{1}{2} \lambda_{\min }(Q)|x|^{2} $
+1. f 连续，$\ell,V_f$ 为二次函数且连续
+2. $\forall x \in \mathbb{X}_{\mathrm{f}}, \exists u \in \mathbb{U} \text { s.t. } f(x, u) \in \mathbb{X}_{\mathrm{f}}$
+3. $V_{\mathrm{f}}(f(x, u)) \leq V_{\mathrm{f}}(x)-\ell(x, u)$
+4. $\ell(x, u)=\frac{1}{2}\left(x^{\top} Q x+u^{\top} R u\right) \geq \frac{1}{2} x^{\top} Q x \geq \frac{1}{2} \lambda_{\min }(Q)|x|^{2}$
 5. $V_{\mathrm{f}}(x)=\frac{1}{2} x^{\top} P x \leq \frac{1}{2} \lambda_{\max }(P)|x|^{2}$
 6. $\mathbb{X}$ 为闭集； $\mathbb{U}$, $\mathbb{X}_{\boldsymbol{f}} \subseteq \mathbb{X}$ 为紧集；
 7. 终端集包含原点或平衡点
